@@ -4,8 +4,19 @@
   <div class="cv-grid">
     <!-- Sidebar -->
     <aside class="cv-sidebar">
-      <header>
+      <header class="cv-head">
+        @if (cv.basics.containsImage && cv.basics.imageURL) {
+          <img
+            class="cv-photo"
+            [src]="cv.basics.imageURL"
+            [alt]="cv.basics.fullName"
+            referrerpolicy="no-referrer"
+          />
+        }
         <h1 class="cv-name">{{ cv.basics.fullName }}</h1>
+        @if (cv.basics.title) {
+          <p class="cv-headline">{{ cv.basics.title }}</p>
+        }
       </header>
 
       <section>

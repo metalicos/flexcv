@@ -17,6 +17,8 @@ export interface ResumeBasics {
   readonly fullName: string;
   readonly title: string;
   readonly summary: string;
+  readonly containsImage: boolean;
+  readonly imageURL?: string;
   readonly contact: ResumeContact;
 }
 

@@ -13,6 +13,9 @@ export const SAMPLE_RESUME: Resume = {
       'automated manual efforts by 58%. Specialist in high-load migrations, event-driven ' +
       'architectures, and technical leadership within the Retail, Healthcare, Real Estate ' +
       'and IoT domains.',
+    containsImage: true,
+    imageURL:
+      'https://ui-avatars.com/api/?name=Ostap+Komplikevych&size=256&background=00366d&color=ffffff',
     contact: {
       location: 'Ukraine, Lviv',
       github: '@komplikevych',

@@ -23,6 +23,10 @@ function str(value: unknown): string {
   return typeof value === 'string' ? value : '';
 }
 
+function bool(value: unknown): boolean {
+  return value === true;
+}
+
 function strArray(value: unknown): string[] {
   return Array.isArray(value) ? value.filter((v): v is string => typeof v === 'string') : [];
 }
@@ -88,11 +92,16 @@ export function validateResume(input: unknown): Resume {
     throw new ResumeValidationError('Resume must include "basics.fullName".');
   }
 
+  const imageURL = str(basics['imageURL']) || undefined;
+  const containsImage = bool(basics['containsImage']) && imageURL !== undefined;
+
   return {
     basics: {
       fullName,
       title: str(basics['title']),
       summary: str(basics['summary']),
+      containsImage,
+      imageURL,
       contact: {
         location: str(contact['location']) || undefined,
         github: str(contact['github']) || undefined,

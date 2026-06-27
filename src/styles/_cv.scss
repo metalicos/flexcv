@@ -245,3 +245,26 @@
     inset: 0;
   }
 }
+
+// --- Photo / headline (sidebar header) ---
+.cv-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cv-photo {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-divider);
+  background: var(--color-surface-alt);
+}
+
+.cv-headline {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin: 0;
+}

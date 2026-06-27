@@ -5,7 +5,7 @@
 <mat-tab-group>
   <mat-tab label="File">
     <div class="flex flex-col gap-3 p-4">
-      <p class="field-hint">Import a JSON or TXT file. PDF/DOCX parsing via Gemini is coming next.</p>
+      <p class="field-hint">Import a JSON, TXT, PDF, or DOCX file. PDF and DOCX are converted to JSON with Gemini.</p>
       <div class="form-actions">
         <button matButton="filled" (click)="fileInput.click()" [disabled]="busy()">
           <mat-icon>upload_file</mat-icon> Choose file

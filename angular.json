@@ -27,10 +27,27 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "pdf.worker.min.mjs",
+                "input": "node_modules/pdfjs-dist/build",
+                "output": "."
               }
             ],
             "styles": [
               "src/styles.scss"
+            ],
+            "allowedCommonJsDependencies": [
+              "mammoth",
+              "lop",
+              "bluebird",
+              "base64-js",
+              "jszip",
+              "dingbat-to-unicode",
+              "xmlbuilder",
+              "@xmldom/xmldom",
+              "underscore",
+              "option"
             ]
           },
           "configurations": {
@@ -47,7 +64,14 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": {
+                "scripts": true,
+                "styles": true,
+                "fonts": {
+                  "inline": false
+                }
+              }
             },
             "development": {
               "optimization": false,

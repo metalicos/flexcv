@@ -8,6 +8,8 @@ Use EXACTLY this schema (omit unknown optional fields, never invent data):
     "fullName": string,
     "title": string,
     "summary": string,
+    "containsImage": boolean,
+    "imageURL"?: string,
     "contact": {
       "location"?: string, "github"?: string, "email"?: string,
       "linkedin"?: string, "phone"?: string, "website"?: string, "birthDate"?: string
@@ -26,6 +28,7 @@ Rules:
 - Output ONLY valid JSON, no markdown, no commentary.
 - Group skills into reasonable categories.
 - Preserve the original wording of responsibilities.
+- Plain text has no photo: set "containsImage" to false and omit "imageURL".
 
 RESUME TEXT:
 """
