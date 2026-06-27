@@ -9,8 +9,9 @@ import { buildOptimizePrompt } from '../prompts/resume-optimize.prompt';
 import { buildMatchAnalysisPrompt } from '../prompts/match-analysis.prompt';
 import { buildRecruiterPitchPrompt } from '../prompts/recruiter.prompt';
 import { buildTechnicalPitchPrompt } from '../prompts/technical.prompt';
+import { buildChatPrompt } from '../prompts/chat.prompt';
 
-/** Orchestrates the four AI-assisted resume tasks against a job description. */
+/** Orchestrates the AI-assisted resume tasks and free-form chat against a job description. */
 @Injectable({ providedIn: 'root' })
 export class ResumeAiService {
   private readonly gemini = inject(GeminiClient);
@@ -48,6 +49,18 @@ export class ResumeAiService {
 
   technicalPitch(resume: Resume, jobDescription: string): Promise<string[]> {
     return this.pitch(buildTechnicalPitchPrompt(this.serialize(resume), jobDescription));
+  }
+
+  async chat(
+    resume: Resume,
+    jobDescription: string,
+    history: string,
+    question: string,
+  ): Promise<string> {
+    return this.gemini.generateText(
+      buildChatPrompt(this.serialize(resume), jobDescription, history, question),
+      { temperature: 0.5 },
+    );
   }
 
   private async pitch(prompt: string): Promise<string[]> {

@@ -1,0 +1,61 @@
+// AI chat conversation styling.
+
+.chat-thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.chat-row {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.chat-row--user {
+  justify-content: flex-end;
+}
+
+.chat-bubble {
+  max-width: min(80%, 640px);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.chat-bubble--user {
+  background: var(--color-accent);
+  color: #ffffff;
+  border-color: var(--color-accent);
+}
+
+.chat-bubble--error {
+  background: #fde8e8;
+  border-color: #f5b5b5;
+  color: #8a1f1f;
+}
+
+.chat-card {
+  width: 100%;
+}
+
+.chat-composer {
+  position: sticky;
+  bottom: 0;
+  padding: var(--space-4) 0 var(--space-2);
+  background: linear-gradient(to top, var(--color-app-bg) 70%, transparent);
+}
+
+.chat-input-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.chat-send {
+  margin-top: var(--space-1);
+  flex: 0 0 auto;
+}

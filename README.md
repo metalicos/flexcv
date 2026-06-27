@@ -14,7 +14,7 @@ job description with Google Gemini.
 - **Export** to JSON, and to PDF via the browser print pipeline.
 - **Settings** to store your Gemini API key (kept only in `localStorage`) with a
   shortcut to create one in Google AI Studio.
-- **AI Assistant** with four tasks against a target vacancy:
+- **AI Chat** — a conversation against a target vacancy, with four one-click tasks plus free-form follow-up questions:
   1. Optimize the resume for the vacancy (downloadable / applyable JSON).
   2. Match / mismatch analysis of technologies, stack and experience.
   3. Recruiter talking points.
@@ -39,5 +39,5 @@ npm run build      # production build
 > platform-specific binaries are fetched for your OS.
 
 Then open **Settings**, paste a Gemini API key (button links to
-https://aistudio.google.com/api-keys), and start on **My CV** by loading the sample
-or importing your own JSON.
+https://aistudio.google.com/api-keys), load your CV on **My CV**, then go to
+**AI Chat**, paste a job description and run the tasks or ask questions.

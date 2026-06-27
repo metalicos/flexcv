@@ -12,9 +12,9 @@ export const routes: Routes = [
   },
   {
     path: 'ai',
-    title: 'AI Assistant — FlexCV',
+    title: 'AI Chat — FlexCV',
     loadComponent: () =>
-      import('./features/ai/pages/ai-assistant.page').then((m) => m.AiAssistantPage),
+      import('./features/chat/pages/chat.page').then((m) => m.ChatPage),
   },
   {
     path: 'settings',
