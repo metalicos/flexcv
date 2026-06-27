@@ -1,0 +1,38 @@
+// Centralized design tokens. Never hardcode colors or spacing in components.
+
+:root {
+  // Brand / CV palette (sampled from the reference CV PDF)
+  --color-accent: #00366d;
+  --color-accent-strong: #002a55;
+  --color-text: #1e1e1e;
+  --color-text-muted: #5b6470;
+  --color-divider: #cbd0d7;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f5f6f8;
+  --color-app-bg: #eceef1;
+
+  // Spacing scale
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+
+  // Radii / elevation
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  // CV document geometry (A4)
+  --cv-page-width: 210mm;
+  --cv-page-min-height: 297mm;
+  --cv-sidebar-width: 33%;
+  --cv-page-pad: 14mm;
+
+  // Typography
+  --font-base: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-size-base: 14px;
+  --line-height-base: 1.5;
+}

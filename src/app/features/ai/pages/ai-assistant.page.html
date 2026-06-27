@@ -1,0 +1,120 @@
+<div class="page-header">
+  <h1 class="page-title">AI Assistant</h1>
+</div>
+
+@if (!hasResume()) {
+  <mat-card>
+    <mat-card-content class="empty-state">
+      <mat-icon>description</mat-icon>
+      <p>Import a resume first on the <a routerLink="/cv">My CV</a> page.</p>
+    </mat-card-content>
+  </mat-card>
+} @else {
+  @if (!hasApiKey()) {
+    <mat-card class="mb-4">
+      <mat-card-content class="flex items-center gap-3 pt-4">
+        <mat-icon class="accent">key</mat-icon>
+        <span>Add your Gemini API key in <a routerLink="/settings">Settings</a> to enable AI tasks.</span>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <mat-card class="mb-6">
+    <mat-card-header>
+      <mat-card-title>Target vacancy</mat-card-title>
+      <mat-card-subtitle>Paste the job description, then run any task below.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="pt-4">
+      <mat-form-field class="form-field-full" appearance="outline">
+        <mat-label>Job description</mat-label>
+        <textarea
+          matInput
+          rows="8"
+          [ngModel]="jobDescription()"
+          (ngModelChange)="jobDescription.set($event)"
+        ></textarea>
+      </mat-form-field>
+
+      @if (activeTask()) {
+        <mat-progress-bar mode="indeterminate" />
+      }
+
+      <div class="form-actions mt-3">
+        <button matButton="filled" [disabled]="!ready || !!activeTask()" (click)="runOptimize()">
+          <mat-icon>auto_fix_high</mat-icon> Optimize resume
+        </button>
+        <button matButton="tonal" [disabled]="!ready || !!activeTask()" (click)="runMatch()">
+          <mat-icon>compare_arrows</mat-icon> Match / mismatch
+        </button>
+        <button matButton="tonal" [disabled]="!ready || !!activeTask()" (click)="runRecruiter()">
+          <mat-icon>record_voice_over</mat-icon> Recruiter pitch
+        </button>
+        <button matButton="tonal" [disabled]="!ready || !!activeTask()" (click)="runTechnical()">
+          <mat-icon>terminal</mat-icon> Technical pitch
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  @if (match(); as result) {
+    <mat-card class="mb-6">
+      <mat-card-header><mat-card-title>Match analysis</mat-card-title></mat-card-header>
+      <mat-card-content class="grid gap-6 pt-4 md:grid-cols-2">
+        <div>
+          <h3 class="accent mb-2">Matches</h3>
+          <ul class="list-disc pl-5 flex flex-col gap-1">
+            @for (item of result.matches; track $index) { <li>{{ item }}</li> }
+          </ul>
+        </div>
+        <div>
+          <h3 class="mb-2" style="color: var(--color-text-muted)">Mismatches / gaps</h3>
+          <ul class="list-disc pl-5 flex flex-col gap-1">
+            @for (item of result.mismatches; track $index) { <li>{{ item }}</li> }
+          </ul>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (recruiterPoints(); as points) {
+    <mat-card class="mb-6">
+      <mat-card-header><mat-card-title>Recruiter talking points</mat-card-title></mat-card-header>
+      <mat-card-content class="pt-4">
+        <ul class="list-disc pl-5 flex flex-col gap-2">
+          @for (point of points; track $index) { <li>{{ point }}</li> }
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (technicalPoints(); as points) {
+    <mat-card class="mb-6">
+      <mat-card-header><mat-card-title>Technical interview talking points</mat-card-title></mat-card-header>
+      <mat-card-content class="pt-4">
+        <ul class="list-disc pl-5 flex flex-col gap-2">
+          @for (point of points; track $index) { <li>{{ point }}</li> }
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (optimized(); as optimizedResume) {
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Optimized resume</mat-card-title>
+        <mat-card-subtitle>Tailored to the vacancy above.</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="pt-4">
+        <div class="form-actions mb-4">
+          <button matButton="filled" (click)="applyOptimized()">
+            <mat-icon>check</mat-icon> Use as my CV
+          </button>
+          <button matButton (click)="downloadOptimized()">
+            <mat-icon>data_object</mat-icon> Download JSON
+          </button>
+        </div>
+        <app-cv-document [resume]="optimizedResume" />
+      </mat-card-content>
+    </mat-card>
+  }
+}

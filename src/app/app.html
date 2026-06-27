@@ -1,0 +1,24 @@
+<div class="app-shell">
+  <mat-toolbar class="app-toolbar">
+    <a routerLink="/cv" class="flex items-center gap-2 no-underline">
+      <mat-icon>badge</mat-icon>
+      <span class="font-semibold">FlexCV</span>
+    </a>
+    <span class="toolbar-spacer"></span>
+    <nav class="flex items-center gap-1">
+      <a matButton routerLink="/cv" routerLinkActive="toolbar-link-active">
+        <mat-icon>description</mat-icon> My CV
+      </a>
+      <a matButton routerLink="/ai" routerLinkActive="toolbar-link-active">
+        <mat-icon>smart_toy</mat-icon> AI Assistant
+      </a>
+      <a matButton routerLink="/settings" routerLinkActive="toolbar-link-active">
+        <mat-icon>settings</mat-icon> Settings
+      </a>
+    </nav>
+  </mat-toolbar>
+
+  <main class="app-content">
+    <router-outlet />
+  </main>
+</div>

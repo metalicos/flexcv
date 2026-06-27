@@ -1,0 +1,70 @@
+// App shell layout primitives shared across pages.
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-content {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4);
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.surface-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  gap: var(--space-3);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.app-toolbar .no-underline:hover {
+  text-decoration: none;
+}
+
+.toolbar-link-active {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+@media print {
+  .app-toolbar {
+    display: none;
+  }
+
+  .app-content {
+    padding: 0;
+    max-width: none;
+  }
+}

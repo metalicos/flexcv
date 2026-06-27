@@ -1,0 +1,23 @@
+// Shared form composition. Field-level styling stays with Material.
+
+.form-field-full {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.field-hint {
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}

@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h1 class="page-title">My CV</h1>
+  @if (hasResume()) {
+    <div class="form-actions">
+      <button matButton="filled" (click)="exportPdf()">
+        <mat-icon>picture_as_pdf</mat-icon> Export PDF
+      </button>
+      <button matButton (click)="exportJson()">
+        <mat-icon>data_object</mat-icon> Export JSON
+      </button>
+      <button matButton (click)="clear()">
+        <mat-icon>delete_outline</mat-icon> Clear
+      </button>
+    </div>
+  }
+</div>
+
+@if (hasResume()) {
+  <mat-expansion-panel class="mb-6">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Import / replace resume</mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-import-panel (imported)="onImported($event)" />
+  </mat-expansion-panel>
+
+  <app-cv-document [resume]="resume()!" />
+} @else {
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Import a resume to get started</mat-card-title>
+      <mat-card-subtitle>
+        Load JSON, fetch from a public URL, or paste text for Gemini to structure.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="pt-4">
+      <app-import-panel (imported)="onImported($event)" />
+    </mat-card-content>
+  </mat-card>
+}

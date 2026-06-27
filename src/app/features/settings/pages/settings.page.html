@@ -1,0 +1,62 @@
+<div class="page-header">
+  <h1 class="page-title">Settings</h1>
+</div>
+
+<mat-card class="max-w-2xl">
+  <mat-card-header>
+    <mat-card-title>Gemini API</mat-card-title>
+    <mat-card-subtitle>
+      Your key is stored only in this browser's local storage and is sent solely to Google Gemini.
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="flex flex-col gap-4 pt-4">
+    <mat-form-field class="form-field-full" appearance="outline">
+      <mat-label>Gemini API key</mat-label>
+      <input
+        matInput
+        [type]="revealKey() ? 'text' : 'password'"
+        [ngModel]="keyInput()"
+        (ngModelChange)="keyInput.set($event)"
+        placeholder="AIza..."
+        autocomplete="off"
+      />
+      <button
+        matIconButton
+        matSuffix
+        type="button"
+        (click)="toggleReveal()"
+        [attr.aria-label]="revealKey() ? 'Hide key' : 'Show key'"
+      >
+        <mat-icon>{{ revealKey() ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field class="form-field-full" appearance="outline">
+      <mat-label>Model</mat-label>
+      <mat-select [ngModel]="modelInput()" (ngModelChange)="modelInput.set($event)">
+        @for (model of models; track model) {
+          <mat-option [value]="model">{{ model }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <p class="field-hint">
+      Don't have a key yet? Create one for free in Google AI Studio.
+    </p>
+  </mat-card-content>
+
+  <mat-card-actions class="form-actions">
+    <button matButton="filled" (click)="save()">
+      <mat-icon>save</mat-icon> Save
+    </button>
+    <button matButton (click)="openApiKeyPage()">
+      <mat-icon>open_in_new</mat-icon> Get API key
+    </button>
+    @if (hasApiKey()) {
+      <button matButton (click)="clearKey()">
+        <mat-icon>delete</mat-icon> Remove key
+      </button>
+    }
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,247 @@
+// CV document rendering. Reproduces the reference PDF layout with semantic HTML,
+// no absolute positioning, responsive, and printable to A4.
+
+.cv-document {
+  width: var(--cv-page-width);
+  max-width: 100%;
+  min-height: var(--cv-page-min-height);
+  margin: 0 auto;
+  padding: var(--cv-page-pad);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  font-size: 11pt;
+  line-height: 1.42;
+}
+
+.cv-grid {
+  display: grid;
+  grid-template-columns: var(--cv-sidebar-width) 1fr;
+  column-gap: var(--space-6);
+  align-items: start;
+}
+
+.cv-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.cv-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.cv-name {
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  line-height: 1.15;
+}
+
+.cv-section-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  padding-bottom: var(--space-1);
+  border-bottom: 1.5px solid var(--color-divider);
+  margin-bottom: var(--space-3);
+}
+
+// --- Contacts ---
+.cv-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cv-contact-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.85rem;
+  color: var(--color-text);
+  word-break: break-word;
+}
+
+.cv-contact-item mat-icon {
+  color: var(--color-accent);
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+// --- Languages ---
+.cv-kv-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cv-kv-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-size: 0.85rem;
+}
+
+.cv-kv-row .cv-kv-value {
+  color: var(--color-text-muted);
+}
+
+// --- Skills ---
+.cv-skill-group {
+  margin-bottom: var(--space-3);
+}
+
+.cv-skill-group-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.cv-skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+}
+
+.cv-skill-tag {
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.cv-skill-tag::after {
+  content: '\00B7';
+  margin-left: var(--space-2);
+  color: var(--color-divider);
+}
+
+.cv-skill-tag:last-child::after {
+  content: '';
+  margin: 0;
+}
+
+// --- Summary ---
+.cv-summary {
+  font-size: 0.92rem;
+  text-align: justify;
+}
+
+// --- Education ---
+.cv-edu-item {
+  margin-bottom: var(--space-3);
+}
+
+.cv-edu-degree {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.cv-edu-meta {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+// --- Employment ---
+.cv-job {
+  margin-bottom: var(--space-4);
+  break-inside: avoid;
+}
+
+.cv-job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.cv-job-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-accent-strong);
+}
+
+.cv-job-period {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.cv-job-line {
+  font-size: 0.85rem;
+  margin-top: var(--space-1);
+}
+
+.cv-job-line .cv-job-label {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.cv-resp-list {
+  margin: var(--space-2) 0 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cv-resp-list li {
+  font-size: 0.85rem;
+}
+
+// --- Responsive: collapse to single column on small screens ---
+@media (max-width: 720px) {
+  .cv-document {
+    width: 100%;
+    padding: var(--space-5);
+  }
+
+  .cv-grid {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-5);
+  }
+}
+
+// --- Print: clean A4 output ---
+@media print {
+  :root {
+    --color-app-bg: #ffffff;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .cv-document,
+  .cv-document * {
+    visibility: visible;
+  }
+
+  .cv-document {
+    width: 210mm;
+    box-shadow: none;
+    margin: 0;
+    padding: var(--cv-page-pad);
+  }
+
+  .cv-document {
+    position: absolute;
+    inset: 0;
+  }
+}

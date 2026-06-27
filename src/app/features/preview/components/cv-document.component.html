@@ -1,0 +1,114 @@
+@let cv = resume();
+
+<article class="cv-document">
+  <div class="cv-grid">
+    <!-- Sidebar -->
+    <aside class="cv-sidebar">
+      <header>
+        <h1 class="cv-name">{{ cv.basics.fullName }}</h1>
+      </header>
+
+      <section>
+        <ul class="cv-contact-list">
+          @for (row of contactRows(cv); track row.icon) {
+            <li class="cv-contact-item">
+              <mat-icon>{{ row.icon }}</mat-icon>
+              <span>{{ row.value }}</span>
+            </li>
+          }
+        </ul>
+      </section>
+
+      @if (cv.languages.length) {
+        <section>
+          <h2 class="cv-section-title">Languages</h2>
+          <div class="cv-kv-list">
+            @for (lang of cv.languages; track lang.name) {
+              <div class="cv-kv-row">
+                <span>{{ lang.name }}</span>
+                <span class="cv-kv-value">{{ lang.level }}</span>
+              </div>
+            }
+          </div>
+        </section>
+      }
+
+      @if (cv.skills.length) {
+        <section>
+          <h2 class="cv-section-title">Technical Skills</h2>
+          @for (group of cv.skills; track group.category) {
+            <div class="cv-skill-group">
+              @if (group.category) {
+                <div class="cv-skill-group-name">{{ group.category }}</div>
+              }
+              <div class="cv-skill-tags">
+                @for (skill of group.skills; track skill) {
+                  <span class="cv-skill-tag">{{ skill }}</span>
+                }
+              </div>
+            </div>
+          }
+        </section>
+      }
+    </aside>
+
+    <!-- Main -->
+    <main class="cv-main">
+      @if (cv.basics.summary) {
+        <section>
+          <h2 class="cv-section-title">Summary</h2>
+          <p class="cv-summary">{{ cv.basics.summary }}</p>
+        </section>
+      }
+
+      @if (cv.education.length) {
+        <section>
+          <h2 class="cv-section-title">Education</h2>
+          @for (edu of cv.education; track $index) {
+            <div class="cv-edu-item">
+              <div class="cv-job-header">
+                <span class="cv-edu-degree">{{ edu.degree }}</span>
+                <span class="cv-job-period">{{ period(edu.startDate, edu.endDate) }}</span>
+              </div>
+              <div class="cv-edu-meta">{{ edu.institution }}</div>
+              @if (edu.specialty) {
+                <div class="cv-edu-meta">Specialty: {{ edu.specialty }}</div>
+              }
+            </div>
+          }
+        </section>
+      }
+
+      @if (cv.employment.length) {
+        <section>
+          <h2 class="cv-section-title">Employment</h2>
+          @for (job of cv.employment; track $index) {
+            <div class="cv-job">
+              <div class="cv-job-header">
+                <span class="cv-job-title">{{ job.role }} ({{ job.company }})</span>
+                <span class="cv-job-period">{{ period(job.startDate, job.endDate) }}</span>
+              </div>
+              @if (job.project) {
+                <div class="cv-job-line">
+                  <span class="cv-job-label">Project: </span>{{ job.project }}
+                </div>
+              }
+              @if (job.description) {
+                <div class="cv-job-line">
+                  <span class="cv-job-label">Description: </span>{{ job.description }}
+                </div>
+              }
+              @if (job.responsibilities.length) {
+                <ul class="cv-resp-list">
+                  @for (item of job.responsibilities; track $index) {
+                    <li>{{ item }}</li>
+                  }
+                </ul>
+              }
+            </div>
+          }
+        </section>
+      }
+    </main>
+  </div>
+</article>

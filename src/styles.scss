@@ -1,0 +1,11 @@
+@use 'styles/material';
+@use 'styles/variables';
+@use 'styles/typography';
+@use 'styles/layout';
+@use 'styles/forms';
+@use 'styles/cv';
+@use 'styles/utilities';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
