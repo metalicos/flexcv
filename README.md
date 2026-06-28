@@ -25,43 +25,8 @@ job description with Google Gemini.
 
 - **Languages** — two independent settings: **Interface language** (Ukrainian by default, English optional) translates the whole UI at runtime; **CV language** (English by default, Ukrainian optional) drives the resume headings and every AI output (parsing, optimize, match, pitches, chat).
 
-## Tech stack
+## Deployment
+**Deployed here:** [https://metalicos.github.io/flexcv/](https://metalicos.github.io/flexcv/)
 
-Angular 21 (standalone, signals, zoneless, OnPush), Angular Material, TailwindCSS,
-TypeScript strict. Feature-first architecture; the resume JSON is the single source
-of truth. See `PROJECT_ARCHITECTURE.md` and `RULES.md`.
-
-## Getting started
-
-```bash
-npm install
-npm start          # dev server at http://localhost:4200
-npm run build      # production build
-```
-
-> Note: if a `node_modules` folder is already present from packaging, delete it
-> first (`rmdir /s /q node_modules` on Windows) and then run `npm install`, so the
-> platform-specific binaries are fetched for your OS.
-
-Then open **Settings**, paste a Gemini API key (button links to
-https://aistudio.google.com/api-keys), load your CV on **My CV**, then go to
-**AI Chat**, paste a job description and run the tasks or ask questions.
-
-## Deployment (GitHub Pages)
-
-A GitHub Actions workflow (`.github/workflows/deploy.yml`) builds the app and
-publishes it to GitHub Pages on every push to `master` (and on manual dispatch).
-
-The workflow enables Pages automatically (`configure-pages` with `enablement: true`),
-so no manual setup is required. If your organization restricts that, enable it once
-under **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-
-The workflow:
-- installs dependencies with `npm ci` and builds with the production configuration;
-- sets `--base-href` to `/<repo>/` so assets resolve under the Pages sub-path;
-- copies `index.html` to `404.html` so client-side routes (`/cv`, `/ai`, `/settings`)
-  work on direct navigation and refresh;
-- uploads `dist/flexcv/browser` and deploys it with the official Pages actions.
-
-After the first successful run the app is available at
-`https://<owner>.github.io/<repo>/` (for this repo: https://metalicos.github.io/flexcv/).
+## Example of shared CV
+**Shared CV:** [https://metalicos.github.io/flexcv/...](https://metalicos.github.io/flexcv/cv?cv=https:%2F%2Fraw.githubusercontent.com%2Fmetalicos%2Fflexcv%2Frefs%2Fheads%2Fmaster%2Falex-carter.json)
