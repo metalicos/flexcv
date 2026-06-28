@@ -1,0 +1,64 @@
+name: Build and deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# Allow GITHUB_TOKEN to deploy to Pages and verify the deployment origin.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Run one deployment at a time; cancel superseded in-progress runs.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (Angular, production)
+        # base-href must match the Pages sub-path: https://<owner>.github.io/<repo>/
+        run: npm run build -- --configuration production --base-href "/${{ github.event.repository.name }}/"
+
+      - name: Prepare static output for Pages
+        run: |
+          out="dist/flexcv/browser"
+          # SPA deep-link fallback: serve the app for unknown routes (/cv, /ai, /settings)
+          cp "$out/index.html" "$out/404.html"
+          # Disable Jekyll processing of the artifact
+          touch "$out/.nojekyll"
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/flexcv/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

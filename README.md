@@ -46,3 +46,21 @@ npm run build      # production build
 Then open **Settings**, paste a Gemini API key (button links to
 https://aistudio.google.com/api-keys), load your CV on **My CV**, then go to
 **AI Chat**, paste a job description and run the tasks or ask questions.
+
+## Deployment (GitHub Pages)
+
+A GitHub Actions workflow (`.github/workflows/deploy.yml`) builds the app and
+publishes it to GitHub Pages on every push to `master` (and on manual dispatch).
+
+One-time setup: in the repository, go to **Settings → Pages → Build and deployment**
+and set **Source** to **GitHub Actions**.
+
+The workflow:
+- installs dependencies with `npm ci` and builds with the production configuration;
+- sets `--base-href` to `/<repo>/` so assets resolve under the Pages sub-path;
+- copies `index.html` to `404.html` so client-side routes (`/cv`, `/ai`, `/settings`)
+  work on direct navigation and refresh;
+- uploads `dist/flexcv/browser` and deploys it with the official Pages actions.
+
+After the first successful run the app is available at
+`https://<owner>.github.io/<repo>/` (for this repo: https://metalicos.github.io/flexcv/).
