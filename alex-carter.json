@@ -1,0 +1,164 @@
+{
+  "basics": {
+    "fullName": "Alex Carter",
+    "title": "Senior Java Backend Engineer",
+    "summary": "Senior Java Backend Engineer with 5+ years of experience in building and modernizing scalable enterprise solutions. Expert in Java 21, Spring Boot 3.5, and the AWS ecosystem (ECS, Lambda, Bedrock). Proven track record in architecting AI-native platforms that reduced operational costs by $16,000+ monthly and automated manual efforts by 58%. Specialist in high-load migrations, event-driven architectures, and technical leadership within the Retail, Healthcare, Real Estate and IoT domains.",
+    "containsImage": true,
+    "imageURL": "https://ui-avatars.com/api/?name=Alex+Carter&size=256&background=00366d&color=ffffff",
+    "contact": {
+      "location": "Ukraine, Lviv",
+      "github": "@alexcarter",
+      "email": "alex.carter@example.com",
+      "linkedin": "alex-carter"
+    }
+  },
+  "languages": [
+    {
+      "name": "Ukrainian",
+      "level": "Native"
+    },
+    {
+      "name": "English",
+      "level": "B2"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Languages",
+      "skills": [
+        "Java",
+        "TypeScript",
+        "Angular",
+        "Python"
+      ]
+    },
+    {
+      "category": "Databases",
+      "skills": [
+        "MySQL",
+        "PostgreSQL",
+        "Oracle",
+        "MongoDB",
+        "DynamoDB",
+        "Redis"
+      ]
+    },
+    {
+      "category": "Spring",
+      "skills": [
+        "Spring Boot",
+        "Spring Data JPA",
+        "Spring MVC",
+        "Spring Security",
+        "Spring Cloud",
+        "Spring Batch",
+        "Spring AOP"
+      ]
+    },
+    {
+      "category": "AWS",
+      "skills": [
+        "ECS",
+        "Lambda",
+        "S3",
+        "SQS",
+        "SNS",
+        "API Gateway",
+        "Bedrock",
+        "CloudWatch",
+        "ECR",
+        "Fargate",
+        "ELB/ALB"
+      ]
+    },
+    {
+      "category": "DevOps",
+      "skills": [
+        "Docker",
+        "Kubernetes",
+        "Helm",
+        "Terraform",
+        "Jenkins",
+        "GitHub Actions"
+      ]
+    },
+    {
+      "category": "Messaging",
+      "skills": [
+        "Apache Kafka",
+        "MQTT",
+        "RabbitMQ"
+      ]
+    },
+    {
+      "category": "Architecture",
+      "skills": [
+        "Microservices",
+        "Serverless",
+        "Event-driven",
+        "REST API",
+        "GraphQL"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Master of Science, Computer Engineering",
+      "institution": "Lviv Polytechnic National University",
+      "specialty": "Specialized Computer Systems",
+      "startDate": "Sep 2021",
+      "endDate": "Sep 2022"
+    },
+    {
+      "degree": "Bachelor of Science, Computer Engineering",
+      "institution": "Lviv Polytechnic National University",
+      "specialty": "Specialized Computer Systems",
+      "startDate": "Sep 2017",
+      "endDate": "Sep 2021"
+    }
+  ],
+  "employment": [
+    {
+      "role": "Senior Software Engineer",
+      "company": "EPAM",
+      "project": "Enterprise Platform Modernisation and Optimisation",
+      "description": "Full-cycle software development, including architecture planning, API design, performance tuning, and legacy system optimization.",
+      "startDate": "Sep 2022",
+      "endDate": "Present",
+      "responsibilities": [
+        "Led migration from Java 8/Spring Boot 2.2 to Java 21/Spring Boot 3.4, resolving critical dependency issues",
+        "Coordinated integration across 8 teams, ensuring smooth large-scale system transition",
+        "Mentored engineers and improved code quality, test coverage, and maintainability",
+        "Built LLM-based optimization solution (GPT-4o) saving $16,000+/month",
+        "Designed scalable data processing solutions and contributed to Spark jobs processing 4M records"
+      ]
+    },
+    {
+      "role": "Senior Software Engineer",
+      "company": "GazdAI (self project)",
+      "project": "Real estate platform with AI-core and automated processes",
+      "description": "Architected and deployed a cost-optimized, AI-native platform on AWS, leveraging event-driven systems and automated pipelines.",
+      "startDate": "Dec 2025",
+      "endDate": "Mar 2026",
+      "responsibilities": [
+        "Led AWS cloud architecture (Docker, Terraform, Fargate), delivering a cost-efficient MVP",
+        "Built AI-native platform core with event-driven architecture",
+        "Reduced AI processing costs by 35% via image deduplication (perceptual hashing)",
+        "Cut LLM usage costs through search optimization and caching"
+      ]
+    },
+    {
+      "role": "Team Lead",
+      "company": "EPAM Systems",
+      "project": "AWS Bedrock AI Scheduling and Management Agent",
+      "description": "Led a cross-functional team during an internal EPAM AI Marathon to build an AWS Bedrock–powered AI Scheduling and Management Agent.",
+      "startDate": "Jul 2025",
+      "endDate": "Aug 2025",
+      "responsibilities": [
+        "Led a technical team (1 DevOps, 4 Software Engineers)",
+        "Delivered a solution that reduced manual scheduling efforts by 58%",
+        "Coordinated team workflows and ensured timely delivery of a functional MVP"
+      ]
+    }
+  ]
+}
