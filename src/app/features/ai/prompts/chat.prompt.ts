@@ -4,6 +4,7 @@ export function buildChatPrompt(
   jobDescription: string,
   history: string,
   question: string,
+  language: string,
 ): string {
   return `You are a career assistant helping a candidate evaluate and present their fit for a
 specific job. Treat the resume JSON and the job description as ground truth. Never invent
@@ -23,5 +24,5 @@ ${history || '(empty)'}
 CANDIDATE MESSAGE:
 ${question}
 
-Reply in plain text (no markdown headings, no code fences).`;
+Reply in ${language}, in plain text (no markdown headings, no code fences).`;
 }

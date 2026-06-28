@@ -1,4 +1,5 @@
 @let cv = resume();
+@let lbl = labels();
 
 <article class="cv-document">
   <div class="cv-grid">
@@ -32,7 +33,7 @@
 
       @if (cv.languages.length) {
         <section>
-          <h2 class="cv-section-title">Languages</h2>
+          <h2 class="cv-section-title">{{ lbl.languages }}</h2>
           <div class="cv-kv-list">
             @for (lang of cv.languages; track lang.name) {
               <div class="cv-kv-row">
@@ -46,7 +47,7 @@
 
       @if (cv.skills.length) {
         <section>
-          <h2 class="cv-section-title">Technical Skills</h2>
+          <h2 class="cv-section-title">{{ lbl.skills }}</h2>
           @for (group of cv.skills; track group.category) {
             <div class="cv-skill-group">
               @if (group.category) {
@@ -67,14 +68,14 @@
     <main class="cv-main">
       @if (cv.basics.summary) {
         <section>
-          <h2 class="cv-section-title">Summary</h2>
+          <h2 class="cv-section-title">{{ lbl.summary }}</h2>
           <p class="cv-summary">{{ cv.basics.summary }}</p>
         </section>
       }
 
       @if (cv.education.length) {
         <section>
-          <h2 class="cv-section-title">Education</h2>
+          <h2 class="cv-section-title">{{ lbl.education }}</h2>
           @for (edu of cv.education; track $index) {
             <div class="cv-edu-item">
               <div class="cv-job-header">
@@ -83,7 +84,7 @@
               </div>
               <div class="cv-edu-meta">{{ edu.institution }}</div>
               @if (edu.specialty) {
-                <div class="cv-edu-meta">Specialty: {{ edu.specialty }}</div>
+                <div class="cv-edu-meta">{{ lbl.specialty }}: {{ edu.specialty }}</div>
               }
             </div>
           }
@@ -92,7 +93,7 @@
 
       @if (cv.employment.length) {
         <section>
-          <h2 class="cv-section-title">Employment</h2>
+          <h2 class="cv-section-title">{{ lbl.employment }}</h2>
           @for (job of cv.employment; track $index) {
             <div class="cv-job">
               <div class="cv-job-header">
@@ -101,12 +102,12 @@
               </div>
               @if (job.project) {
                 <div class="cv-job-line">
-                  <span class="cv-job-label">Project: </span>{{ job.project }}
+                  <span class="cv-job-label">{{ lbl.project }}: </span>{{ job.project }}
                 </div>
               }
               @if (job.description) {
                 <div class="cv-job-line">
-                  <span class="cv-job-label">Description: </span>{{ job.description }}
+                  <span class="cv-job-label">{{ lbl.description }}: </span>{{ job.description }}
                 </div>
               }
               @if (job.responsibilities.length) {

@@ -1,18 +1,46 @@
 <div class="page-header">
-  <h1 class="page-title">Settings</h1>
+  <h1 class="page-title">{{ i18n.t('settings.title') }}</h1>
 </div>
+
+<mat-card class="max-w-2xl mb-6">
+  <mat-card-header>
+    <mat-card-title>{{ i18n.t('settings.language.title') }}</mat-card-title>
+    <mat-card-subtitle>{{ i18n.t('settings.language.subtitle') }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="form-row pt-4">
+    <mat-form-field appearance="outline" class="flex-1">
+      <mat-label>{{ i18n.t('settings.interfaceLanguage.label') }}</mat-label>
+      <mat-select
+        [ngModel]="interfaceLanguage()"
+        (ngModelChange)="setInterfaceLanguage($event)"
+      >
+        @for (lang of languages; track lang) {
+          <mat-option [value]="lang">{{ languageLabels[lang] }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="flex-1">
+      <mat-label>{{ i18n.t('settings.cvLanguage.label') }}</mat-label>
+      <mat-select [ngModel]="cvLanguage()" (ngModelChange)="setCvLanguage($event)">
+        @for (lang of languages; track lang) {
+          <mat-option [value]="lang">{{ languageLabels[lang] }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>
 
 <mat-card class="max-w-2xl">
   <mat-card-header>
-    <mat-card-title>Gemini API</mat-card-title>
-    <mat-card-subtitle>
-      Your key is stored only in this browser's local storage and is sent solely to Google Gemini.
-    </mat-card-subtitle>
+    <mat-card-title>{{ i18n.t('settings.gemini.title') }}</mat-card-title>
+    <mat-card-subtitle>{{ i18n.t('settings.gemini.subtitle') }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content class="flex flex-col gap-4 pt-4">
     <mat-form-field class="form-field-full" appearance="outline">
-      <mat-label>Gemini API key</mat-label>
+      <mat-label>{{ i18n.t('settings.apiKey.label') }}</mat-label>
       <input
         matInput
         [type]="revealKey() ? 'text' : 'password'"
@@ -33,7 +61,7 @@
     </mat-form-field>
 
     <mat-form-field class="form-field-full" appearance="outline">
-      <mat-label>Model</mat-label>
+      <mat-label>{{ i18n.t('settings.model.label') }}</mat-label>
       <mat-select [ngModel]="modelInput()" (ngModelChange)="modelInput.set($event)">
         @for (model of models; track model) {
           <mat-option [value]="model">{{ model }}</mat-option>
@@ -41,21 +69,19 @@
       </mat-select>
     </mat-form-field>
 
-    <p class="field-hint">
-      Don't have a key yet? Create one for free in Google AI Studio.
-    </p>
+    <p class="field-hint">{{ i18n.t('settings.apiKey.hint') }}</p>
   </mat-card-content>
 
   <mat-card-actions class="form-actions">
     <button matButton="filled" (click)="save()">
-      <mat-icon>save</mat-icon> Save
+      <mat-icon>save</mat-icon> {{ i18n.t('settings.save') }}
     </button>
     <button matButton (click)="openApiKeyPage()">
-      <mat-icon>open_in_new</mat-icon> Get API key
+      <mat-icon>open_in_new</mat-icon> {{ i18n.t('settings.getKey') }}
     </button>
     @if (hasApiKey()) {
       <button matButton (click)="clearKey()">
-        <mat-icon>delete</mat-icon> Remove key
+        <mat-icon>delete</mat-icon> {{ i18n.t('settings.removeKey') }}
       </button>
     }
   </mat-card-actions>

@@ -3,6 +3,8 @@ import { GeminiClient } from '../../../core/ai/gemini-client.service';
 import { AiError } from '../../../core/ai/ai-error';
 import { MatchAnalysis } from '../../../core/models/ai.model';
 import { Resume } from '../../../core/models/resume.model';
+import { SettingsService } from '../../../core/config/settings.service';
+import { LANGUAGE_PROMPT_NAME } from '../../../core/i18n/translations';
 import { parseJsonSafe } from '../../../core/utils/json.util';
 import { validateResume } from '../../resume/validators/resume.validator';
 import { buildOptimizePrompt } from '../prompts/resume-optimize.prompt';
@@ -15,10 +17,11 @@ import { buildChatPrompt } from '../prompts/chat.prompt';
 @Injectable({ providedIn: 'root' })
 export class ResumeAiService {
   private readonly gemini = inject(GeminiClient);
+  private readonly settings = inject(SettingsService);
 
   async optimize(resume: Resume, jobDescription: string): Promise<Resume> {
     const raw = await this.gemini.generateText(
-      buildOptimizePrompt(this.serialize(resume), jobDescription),
+      buildOptimizePrompt(this.serialize(resume), jobDescription, this.language()),
       { jsonOutput: true, temperature: 0.3 },
     );
     const parsed = parseJsonSafe<unknown>(raw);
@@ -30,7 +33,7 @@ export class ResumeAiService {
 
   async analyzeMatch(resume: Resume, jobDescription: string): Promise<MatchAnalysis> {
     const raw = await this.gemini.generateText(
-      buildMatchAnalysisPrompt(this.serialize(resume), jobDescription),
+      buildMatchAnalysisPrompt(this.serialize(resume), jobDescription, this.language()),
       { jsonOutput: true, temperature: 0.2 },
     );
     const parsed = parseJsonSafe<Partial<MatchAnalysis>>(raw);
@@ -44,11 +47,15 @@ export class ResumeAiService {
   }
 
   recruiterPitch(resume: Resume, jobDescription: string): Promise<string[]> {
-    return this.pitch(buildRecruiterPitchPrompt(this.serialize(resume), jobDescription));
+    return this.pitch(
+      buildRecruiterPitchPrompt(this.serialize(resume), jobDescription, this.language()),
+    );
   }
 
   technicalPitch(resume: Resume, jobDescription: string): Promise<string[]> {
-    return this.pitch(buildTechnicalPitchPrompt(this.serialize(resume), jobDescription));
+    return this.pitch(
+      buildTechnicalPitchPrompt(this.serialize(resume), jobDescription, this.language()),
+    );
   }
 
   async chat(
@@ -58,9 +65,19 @@ export class ResumeAiService {
     question: string,
   ): Promise<string> {
     return this.gemini.generateText(
-      buildChatPrompt(this.serialize(resume), jobDescription, history, question),
+      buildChatPrompt(
+        this.serialize(resume),
+        jobDescription,
+        history,
+        question,
+        this.language(),
+      ),
       { temperature: 0.5 },
     );
+  }
+
+  private language(): string {
+    return LANGUAGE_PROMPT_NAME[this.settings.cvLanguage()];
   }
 
   private async pitch(prompt: string): Promise<string[]> {

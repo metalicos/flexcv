@@ -1,5 +1,9 @@
 /** Prompt: rewrite the resume to target a specific job description, returning Resume JSON. */
-export function buildOptimizePrompt(resumeJson: string, jobDescription: string): string {
+export function buildOptimizePrompt(
+  resumeJson: string,
+  jobDescription: string,
+  language: string,
+): string {
   return `You are an expert technical resume writer. Rewrite the candidate's resume to target
 the job description below, while staying truthful — never invent experience, employers, or skills.
 
@@ -9,6 +13,7 @@ Allowed changes:
 - Adjust the title only if the candidate's experience clearly supports it.
 
 Return ONLY a JSON object using EXACTLY the same schema as the input resume. No markdown, no commentary.
+Write every human-readable string value in ${language} (keep proper nouns, technologies and emails unchanged).
 
 CURRENT RESUME JSON:
 ${resumeJson}

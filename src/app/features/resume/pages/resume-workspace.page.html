@@ -1,15 +1,15 @@
 <div class="page-header">
-  <h1 class="page-title">My CV</h1>
+  <h1 class="page-title">{{ i18n.t('cv.title') }}</h1>
   @if (hasResume()) {
     <div class="form-actions">
       <button matButton="filled" (click)="exportPdf()">
-        <mat-icon>picture_as_pdf</mat-icon> Export PDF
+        <mat-icon>picture_as_pdf</mat-icon> {{ i18n.t('cv.exportPdf') }}
       </button>
       <button matButton (click)="exportJson()">
-        <mat-icon>data_object</mat-icon> Export JSON
+        <mat-icon>data_object</mat-icon> {{ i18n.t('cv.exportJson') }}
       </button>
       <button matButton (click)="clear()">
-        <mat-icon>delete_outline</mat-icon> Clear
+        <mat-icon>delete_outline</mat-icon> {{ i18n.t('cv.clear') }}
       </button>
     </div>
   }
@@ -18,7 +18,7 @@
 @if (hasResume()) {
   <mat-expansion-panel class="mb-6">
     <mat-expansion-panel-header>
-      <mat-panel-title>Import / replace resume</mat-panel-title>
+      <mat-panel-title>{{ i18n.t('cv.importReplace') }}</mat-panel-title>
     </mat-expansion-panel-header>
     <app-import-panel (imported)="onImported($event)" />
   </mat-expansion-panel>
@@ -27,10 +27,8 @@
 } @else {
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Import a resume to get started</mat-card-title>
-      <mat-card-subtitle>
-        Load JSON, fetch from a public URL, or paste text for Gemini to structure.
-      </mat-card-subtitle>
+      <mat-card-title>{{ i18n.t('cv.getStarted.title') }}</mat-card-title>
+      <mat-card-subtitle>{{ i18n.t('cv.getStarted.subtitle') }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content class="pt-4">
       <app-import-panel (imported)="onImported($event)" />

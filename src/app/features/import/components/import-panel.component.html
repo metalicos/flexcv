@@ -3,15 +3,15 @@
 }
 
 <mat-tab-group>
-  <mat-tab label="File">
+  <mat-tab [label]="i18n.t('import.tab.file')">
     <div class="flex flex-col gap-3 p-4">
-      <p class="field-hint">Import a JSON, TXT, PDF, or DOCX file. PDF and DOCX are converted to JSON with Gemini.</p>
+      <p class="field-hint">{{ i18n.t('import.file.hint') }}</p>
       <div class="form-actions">
         <button matButton="filled" (click)="fileInput.click()" [disabled]="busy()">
-          <mat-icon>upload_file</mat-icon> Choose file
+          <mat-icon>upload_file</mat-icon> {{ i18n.t('import.choose') }}
         </button>
         <button matButton (click)="loadSample()" [disabled]="busy()">
-          <mat-icon>auto_awesome</mat-icon> Load sample
+          <mat-icon>auto_awesome</mat-icon> {{ i18n.t('import.loadSample') }}
         </button>
       </div>
       <input
@@ -24,11 +24,11 @@
     </div>
   </mat-tab>
 
-  <mat-tab label="From URL">
+  <mat-tab [label]="i18n.t('import.tab.url')">
     <div class="flex flex-col gap-3 p-4">
-      <p class="field-hint">Paste a public link to a resume JSON (e.g. a GitHub raw URL).</p>
+      <p class="field-hint">{{ i18n.t('import.url.hint') }}</p>
       <mat-form-field class="form-field-full" appearance="outline">
-        <mat-label>Resume JSON URL</mat-label>
+        <mat-label>{{ i18n.t('import.url.label') }}</mat-label>
         <input
           matInput
           [ngModel]="urlInput()"
@@ -38,17 +38,17 @@
       </mat-form-field>
       <div class="form-actions">
         <button matButton="filled" (click)="importUrl()" [disabled]="busy()">
-          <mat-icon>cloud_download</mat-icon> Import
+          <mat-icon>cloud_download</mat-icon> {{ i18n.t('import.url.button') }}
         </button>
       </div>
     </div>
   </mat-tab>
 
-  <mat-tab label="Paste text">
+  <mat-tab [label]="i18n.t('import.tab.text')">
     <div class="flex flex-col gap-3 p-4">
-      <p class="field-hint">Paste raw resume text — Gemini converts it into structured JSON.</p>
+      <p class="field-hint">{{ i18n.t('import.text.hint') }}</p>
       <mat-form-field class="form-field-full" appearance="outline">
-        <mat-label>Resume text</mat-label>
+        <mat-label>{{ i18n.t('import.text.label') }}</mat-label>
         <textarea
           matInput
           rows="8"
@@ -58,7 +58,7 @@
       </mat-form-field>
       <div class="form-actions">
         <button matButton="filled" (click)="importText()" [disabled]="busy()">
-          <mat-icon>auto_fix_high</mat-icon> Convert with Gemini
+          <mat-icon>auto_fix_high</mat-icon> {{ i18n.t('import.text.button') }}
         </button>
       </div>
     </div>

@@ -17,16 +17,16 @@
 
     @case ('match') {
       <mat-card class="chat-card">
-        <mat-card-header><mat-card-title>Match analysis</mat-card-title></mat-card-header>
+        <mat-card-header><mat-card-title>{{ i18n.t('chatmsg.match.title') }}</mat-card-title></mat-card-header>
         <mat-card-content class="grid gap-6 pt-4 md:grid-cols-2">
           <div>
-            <h3 class="accent mb-2">Matches</h3>
+            <h3 class="accent mb-2">{{ i18n.t('chatmsg.match.matches') }}</h3>
             <ul class="list-disc pl-5 flex flex-col gap-1">
               @for (item of msg.content.analysis.matches; track $index) { <li>{{ item }}</li> }
             </ul>
           </div>
           <div>
-            <h3 class="muted mb-2">Mismatches / gaps</h3>
+            <h3 class="muted mb-2">{{ i18n.t('chatmsg.match.mismatches') }}</h3>
             <ul class="list-disc pl-5 flex flex-col gap-1">
               @for (item of msg.content.analysis.mismatches; track $index) { <li>{{ item }}</li> }
             </ul>
@@ -49,16 +49,16 @@
     @case ('optimized') {
       <mat-card class="chat-card">
         <mat-card-header>
-          <mat-card-title>Optimized resume</mat-card-title>
-          <mat-card-subtitle>Tailored to the vacancy. Save the JSON for GitHub.</mat-card-subtitle>
+          <mat-card-title>{{ i18n.t('chatmsg.optimized.title') }}</mat-card-title>
+          <mat-card-subtitle>{{ i18n.t('chatmsg.optimized.subtitle') }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content class="pt-4">
           <div class="form-actions mb-4">
             <button matButton="filled" (click)="applyResume(msg.content.resume)">
-              <mat-icon>check</mat-icon> Use as my CV
+              <mat-icon>check</mat-icon> {{ i18n.t('chatmsg.useAsCv') }}
             </button>
             <button matButton (click)="downloadResume(msg.content.resume)">
-              <mat-icon>data_object</mat-icon> Download JSON
+              <mat-icon>data_object</mat-icon> {{ i18n.t('chatmsg.downloadJson') }}
             </button>
           </div>
           <app-cv-document [resume]="msg.content.resume" />

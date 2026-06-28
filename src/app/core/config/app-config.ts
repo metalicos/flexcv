@@ -4,6 +4,8 @@ export const STORAGE_KEYS = {
   geminiApiKey: 'flexcv.gemini.apiKey',
   geminiModel: 'flexcv.gemini.model',
   resume: 'flexcv.resume.current',
+  interfaceLanguage: 'flexcv.lang.interface',
+  cvLanguage: 'flexcv.lang.cv',
 } as const;
 
 export const GEMINI = {

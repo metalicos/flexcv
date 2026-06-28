@@ -2,6 +2,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { Resume } from '../../../core/models/resume.model';
 import { ResumeRepository } from '../../resume/services/resume-repository.service';
 import { ResumeAiService } from '../../ai/services/resume-ai.service';
+import { I18nService } from '../../../core/i18n/i18n.service';
 import { ChatContent, ChatMessage, ChatRole } from '../models/chat.model';
 
 /**
@@ -12,6 +13,7 @@ import { ChatContent, ChatMessage, ChatRole } from '../models/chat.model';
 export class ChatService {
   private readonly repository = inject(ResumeRepository);
   private readonly ai = inject(ResumeAiService);
+  private readonly i18n = inject(I18nService);
 
   private readonly messagesSig = signal<readonly ChatMessage[]>([]);
   private readonly busySig = signal(false);
@@ -23,31 +25,31 @@ export class ChatService {
   readonly jobDescription = signal('');
 
   runOptimize(): Promise<void> {
-    return this.run('Optimize my resume for this vacancy.', async (resume, jd) => ({
+    return this.run(this.i18n.t('chat.optimize'), async (resume, jd) => ({
       type: 'optimized',
       resume: await this.ai.optimize(resume, jd),
     }));
   }
 
   runMatch(): Promise<void> {
-    return this.run('Show match / mismatch against this vacancy.', async (resume, jd) => ({
+    return this.run(this.i18n.t('chat.match'), async (resume, jd) => ({
       type: 'match',
       analysis: await this.ai.analyzeMatch(resume, jd),
     }));
   }
 
   runRecruiter(): Promise<void> {
-    return this.run('Talking points for the recruiter.', async (resume, jd) => ({
+    return this.run(this.i18n.t('chat.recruiter'), async (resume, jd) => ({
       type: 'pitch',
-      title: 'Recruiter talking points',
+      title: this.i18n.t('chat.title.recruiter'),
       points: await this.ai.recruiterPitch(resume, jd),
     }));
   }
 
   runTechnical(): Promise<void> {
-    return this.run('Talking points for the technical interview.', async (resume, jd) => ({
+    return this.run(this.i18n.t('chat.technical'), async (resume, jd) => ({
       type: 'pitch',
-      title: 'Technical interview talking points',
+      title: this.i18n.t('chat.title.technical'),
       points: await this.ai.technicalPitch(resume, jd),
     }));
   }

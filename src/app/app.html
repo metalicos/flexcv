@@ -7,13 +7,13 @@
     <span class="toolbar-spacer"></span>
     <nav class="flex items-center gap-1">
       <a matButton routerLink="/cv" routerLinkActive="toolbar-link-active">
-        <mat-icon>description</mat-icon> My CV
+        <mat-icon>description</mat-icon> {{ i18n.t('nav.cv') }}
       </a>
       <a matButton routerLink="/ai" routerLinkActive="toolbar-link-active">
-        <mat-icon>forum</mat-icon> AI Chat
+        <mat-icon>forum</mat-icon> {{ i18n.t('nav.chat') }}
       </a>
       <a matButton routerLink="/settings" routerLinkActive="toolbar-link-active">
-        <mat-icon>settings</mat-icon> Settings
+        <mat-icon>settings</mat-icon> {{ i18n.t('nav.settings') }}
       </a>
     </nav>
   </mat-toolbar>

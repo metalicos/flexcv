@@ -10,6 +10,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SettingsService } from '../../../core/config/settings.service';
 import { ResumeRepository } from '../../resume/services/resume-repository.service';
 import { ChatService } from '../services/chat.service';
+import { I18nService } from '../../../core/i18n/i18n.service';
 import { ChatMessageComponent } from '../components/chat-message.component';
 
 @Component({
@@ -33,6 +34,7 @@ export class ChatPage {
   private readonly chat = inject(ChatService);
   private readonly settings = inject(SettingsService);
   private readonly repository = inject(ResumeRepository);
+  protected readonly i18n = inject(I18nService);
 
   protected readonly messages = this.chat.messages;
   protected readonly busy = this.chat.busy;

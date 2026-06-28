@@ -20,6 +20,8 @@ job description with Google Gemini.
   3. Recruiter talking points.
   4. Technical-interview talking points.
 
+- **Languages** — two independent settings: **Interface language** (Ukrainian by default, English optional) translates the whole UI at runtime; **CV language** (English by default, Ukrainian optional) drives the resume headings and every AI output (parsing, optimize, match, pitches, chat).
+
 ## Tech stack
 
 Angular 21 (standalone, signals, zoneless, OnPush), Angular Material, TailwindCSS,

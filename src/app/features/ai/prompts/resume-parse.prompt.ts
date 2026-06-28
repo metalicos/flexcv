@@ -1,5 +1,5 @@
 /** Prompt for converting raw resume text (from PDF/DOCX/TXT) into Resume JSON. */
-export function buildResumeParsePrompt(rawText: string): string {
+export function buildResumeParsePrompt(rawText: string, language: string): string {
   return `You are a resume parser. Convert the resume text below into a single JSON object.
 
 Use EXACTLY this schema (omit unknown optional fields, never invent data):
@@ -26,8 +26,9 @@ Use EXACTLY this schema (omit unknown optional fields, never invent data):
 
 Rules:
 - Output ONLY valid JSON, no markdown, no commentary.
+- Write every human-readable string value in ${language}. Keep proper nouns, brand names,
+  technologies and emails unchanged.
 - Group skills into reasonable categories.
-- Preserve the original wording of responsibilities.
 - Plain text has no photo: set "containsImage" to false and omit "imageURL".
 
 RESUME TEXT:

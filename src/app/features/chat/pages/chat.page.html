@@ -1,8 +1,8 @@
 <div class="page-header">
-  <h1 class="page-title">AI Chat</h1>
+  <h1 class="page-title">{{ i18n.t('chat.title') }}</h1>
   @if (!isEmpty()) {
     <button matButton (click)="clearChat()" [disabled]="busy()">
-      <mat-icon>delete_sweep</mat-icon> Clear chat
+      <mat-icon>delete_sweep</mat-icon> {{ i18n.t('chat.clear') }}
     </button>
   }
 </div>
@@ -11,7 +11,11 @@
   <mat-card>
     <mat-card-content class="empty-state">
       <mat-icon>description</mat-icon>
-      <p>Import a resume first on the <a routerLink="/cv">My CV</a> page.</p>
+      <p>
+        {{ i18n.t('chat.needResume.before') }}
+        <a routerLink="/cv">{{ i18n.t('nav.cv') }}</a>
+        {{ i18n.t('chat.needResume.after') }}
+      </p>
     </mat-card-content>
   </mat-card>
 } @else {
@@ -19,19 +23,23 @@
     <mat-card class="mb-4">
       <mat-card-content class="flex items-center gap-3 pt-4">
         <mat-icon class="accent">key</mat-icon>
-        <span>Add your Gemini API key in <a routerLink="/settings">Settings</a> to start chatting.</span>
+        <span>
+          {{ i18n.t('chat.needKey.before') }}
+          <a routerLink="/settings">{{ i18n.t('nav.settings') }}</a>
+          {{ i18n.t('chat.needKey.after') }}
+        </span>
       </mat-card-content>
     </mat-card>
   }
 
   <mat-card class="mb-4">
     <mat-card-header>
-      <mat-card-title>Target vacancy</mat-card-title>
-      <mat-card-subtitle>Paste the job description — it is the context for every task.</mat-card-subtitle>
+      <mat-card-title>{{ i18n.t('chat.vacancy.title') }}</mat-card-title>
+      <mat-card-subtitle>{{ i18n.t('chat.vacancy.subtitle') }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content class="pt-4">
       <mat-form-field class="form-field-full" appearance="outline">
-        <mat-label>Job description</mat-label>
+        <mat-label>{{ i18n.t('chat.jobDescription.label') }}</mat-label>
         <textarea
           matInput
           rows="6"
@@ -46,7 +54,7 @@
     @if (isEmpty()) {
       <div class="empty-state">
         <mat-icon>forum</mat-icon>
-        <p>Run a task below or ask anything about your fit for this vacancy.</p>
+        <p>{{ i18n.t('chat.empty') }}</p>
       </div>
     }
     @for (message of messages(); track message.id) {
@@ -60,22 +68,22 @@
   <div class="chat-composer">
     <div class="form-actions mb-3">
       <button matButton="tonal" [disabled]="!canRunTask()" (click)="optimize()">
-        <mat-icon>auto_fix_high</mat-icon> Optimize resume
+        <mat-icon>auto_fix_high</mat-icon> {{ i18n.t('chat.optimize') }}
       </button>
       <button matButton="tonal" [disabled]="!canRunTask()" (click)="match()">
-        <mat-icon>compare_arrows</mat-icon> Match / mismatch
+        <mat-icon>compare_arrows</mat-icon> {{ i18n.t('chat.match') }}
       </button>
       <button matButton="tonal" [disabled]="!canRunTask()" (click)="recruiter()">
-        <mat-icon>record_voice_over</mat-icon> Recruiter pitch
+        <mat-icon>record_voice_over</mat-icon> {{ i18n.t('chat.recruiter') }}
       </button>
       <button matButton="tonal" [disabled]="!canRunTask()" (click)="technical()">
-        <mat-icon>terminal</mat-icon> Technical pitch
+        <mat-icon>terminal</mat-icon> {{ i18n.t('chat.technical') }}
       </button>
     </div>
 
     <div class="chat-input-row">
       <mat-form-field class="form-field-full" appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Ask a follow-up question…</mat-label>
+        <mat-label>{{ i18n.t('chat.ask.label') }}</mat-label>
         <textarea
           matInput
           rows="2"

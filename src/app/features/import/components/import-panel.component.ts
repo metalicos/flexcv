@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Resume } from '../../../core/models/resume.model';
 import { IMPORT } from '../../../core/config/app-config';
+import { I18nService } from '../../../core/i18n/i18n.service';
 import { SAMPLE_RESUME } from '../../resume/data/sample-resume';
 import { ResumeImportService } from '../services/resume-import.service';
 
@@ -36,6 +37,7 @@ import { ResumeImportService } from '../services/resume-import.service';
 export class ImportPanelComponent {
   private readonly importService = inject(ResumeImportService);
   private readonly snackBar = inject(MatSnackBar);
+  protected readonly i18n = inject(I18nService);
 
   readonly imported = output<Resume>();
 
@@ -52,7 +54,7 @@ export class ImportPanelComponent {
       return;
     }
     if (file.size > IMPORT.maxFileSizeBytes) {
-      this.fail('File is too large (max 5 MB).');
+      this.fail(this.i18n.t('import.tooLarge'));
       return;
     }
     await this.run(() => this.importService.fromFile(file));
@@ -60,7 +62,7 @@ export class ImportPanelComponent {
 
   protected async importUrl(): Promise<void> {
     if (!this.urlInput().trim()) {
-      this.fail('Enter a URL first.');
+      this.fail(this.i18n.t('import.enterUrl'));
       return;
     }
     await this.run(() => this.importService.fromUrl(this.urlInput()));
@@ -68,7 +70,7 @@ export class ImportPanelComponent {
 
   protected async importText(): Promise<void> {
     if (!this.textInput().trim()) {
-      this.fail('Paste some resume text first.');
+      this.fail(this.i18n.t('import.pasteText'));
       return;
     }
     await this.run(() => this.importService.fromText(this.textInput()));
@@ -91,7 +93,7 @@ export class ImportPanelComponent {
 
   private emit(resume: Resume): void {
     this.imported.emit(resume);
-    this.snackBar.open('Resume imported.', 'OK', { duration: 2500 });
+    this.snackBar.open(this.i18n.t('import.imported'), 'OK', { duration: 2500 });
   }
 
   private fail(message: string): void {

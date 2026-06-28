@@ -3,6 +3,8 @@ import { Injectable, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Resume } from '../../../core/models/resume.model';
 import { GeminiClient } from '../../../core/ai/gemini-client.service';
+import { SettingsService } from '../../../core/config/settings.service';
+import { LANGUAGE_PROMPT_NAME } from '../../../core/i18n/translations';
 import { parseJsonSafe } from '../../../core/utils/json.util';
 import { buildResumeParsePrompt } from '../../ai/prompts/resume-parse.prompt';
 import { validateResume } from '../../resume/validators/resume.validator';
@@ -21,6 +23,7 @@ export class ResumeImportService {
   private readonly http = inject(HttpClient);
   private readonly gemini = inject(GeminiClient);
   private readonly extractor = inject(TextExtractionService);
+  private readonly settings = inject(SettingsService);
 
   fromJson(jsonText: string): Resume {
     let parsed: unknown;
@@ -48,7 +51,8 @@ export class ResumeImportService {
     if (!rawText.trim()) {
       throw new ResumeImportError('No text to import.');
     }
-    const response = await this.gemini.generateText(buildResumeParsePrompt(rawText), {
+    const language = LANGUAGE_PROMPT_NAME[this.settings.cvLanguage()];
+    const response = await this.gemini.generateText(buildResumeParsePrompt(rawText, language), {
       jsonOutput: true,
       temperature: 0.1,
     });

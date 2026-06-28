@@ -5,6 +5,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { Resume } from '../../../core/models/resume.model';
 import { ResumeRepository } from '../services/resume-repository.service';
+import { I18nService } from '../../../core/i18n/i18n.service';
 import { ResumeExportService } from '../../export/services/resume-export.service';
 import { ImportPanelComponent } from '../../import/components/import-panel.component';
 import { CvDocumentComponent } from '../../preview/components/cv-document.component';
@@ -25,6 +26,7 @@ import { CvDocumentComponent } from '../../preview/components/cv-document.compon
 })
 export class ResumeWorkspacePage {
   private readonly repository = inject(ResumeRepository);
+  protected readonly i18n = inject(I18nService);
   private readonly exporter = inject(ResumeExportService);
 
   protected readonly resume = this.repository.resume;
