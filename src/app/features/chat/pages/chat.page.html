@@ -1,10 +1,25 @@
 <div class="page-header">
   <h1 class="page-title">{{ i18n.t('chat.title') }}</h1>
-  @if (!isEmpty()) {
-    <button matButton (click)="clearChat()" [disabled]="busy()">
-      <mat-icon>delete_sweep</mat-icon> {{ i18n.t('chat.clear') }}
+  <div class="form-actions">
+    <button matButton (click)="chatFile.click()" [disabled]="busy()">
+      <mat-icon>file_upload</mat-icon> {{ i18n.t('chat.import') }}
     </button>
-  }
+    @if (!isEmpty()) {
+      <button matButton (click)="exportChat()" [disabled]="busy()">
+        <mat-icon>file_download</mat-icon> {{ i18n.t('chat.export') }}
+      </button>
+      <button matButton (click)="clearChat()" [disabled]="busy()">
+        <mat-icon>delete_sweep</mat-icon> {{ i18n.t('chat.clear') }}
+      </button>
+    }
+    <input
+      #chatFile
+      type="file"
+      class="hidden"
+      accept=".json,application/json"
+      (change)="onImportFile($event)"
+    />
+  </div>
 </div>
 
 @if (!hasResume()) {

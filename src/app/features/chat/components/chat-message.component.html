@@ -60,8 +60,11 @@
             <button matButton (click)="downloadResume(msg.content.resume)">
               <mat-icon>data_object</mat-icon> {{ i18n.t('chatmsg.downloadJson') }}
             </button>
+            <button matButton="filled" (click)="downloadPdf()">
+              <mat-icon>picture_as_pdf</mat-icon> {{ i18n.t('chatmsg.downloadPdf') }}
+            </button>
           </div>
-          <app-cv-document [resume]="msg.content.resume" />
+          <app-cv-document #cvDoc [resume]="msg.content.resume" />
         </mat-card-content>
       </mat-card>
     }

@@ -20,6 +20,9 @@ job description with Google Gemini.
   3. Recruiter talking points.
   4. Technical-interview talking points.
 
+  The whole conversation can be exported / imported as JSON, and each optimized
+  resume has a one-click **Download PDF** (plus Download JSON / Use as my CV).
+
 - **Languages** — two independent settings: **Interface language** (Ukrainian by default, English optional) translates the whole UI at runtime; **CV language** (English by default, Ukrainian optional) drives the resume headings and every AI output (parsing, optimize, match, pitches, chat).
 
 ## Tech stack

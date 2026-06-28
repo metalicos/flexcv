@@ -7,10 +7,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SettingsService } from '../../../core/config/settings.service';
 import { ResumeRepository } from '../../resume/services/resume-repository.service';
 import { ChatService } from '../services/chat.service';
 import { I18nService } from '../../../core/i18n/i18n.service';
+import { downloadTextFile } from '../../../core/utils/download.util';
 import { ChatMessageComponent } from '../components/chat-message.component';
 
 @Component({
@@ -35,6 +37,7 @@ export class ChatPage {
   private readonly settings = inject(SettingsService);
   private readonly repository = inject(ResumeRepository);
   protected readonly i18n = inject(I18nService);
+  private readonly snackBar = inject(MatSnackBar);
 
   protected readonly messages = this.chat.messages;
   protected readonly busy = this.chat.busy;
@@ -75,6 +78,26 @@ export class ChatPage {
     }
     this.draft.set('');
     void this.chat.ask(text);
+  }
+
+  protected exportChat(): void {
+    downloadTextFile('flexcv-chat.json', this.chat.exportJson());
+    this.snackBar.open(this.i18n.t('chat.exported'), 'OK', { duration: 2500 });
+  }
+
+  protected async onImportFile(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file) {
+      return;
+    }
+    try {
+      this.chat.importJson(await file.text());
+      this.snackBar.open(this.i18n.t('chat.importedOk'), 'OK', { duration: 2500 });
+    } catch {
+      this.snackBar.open(this.i18n.t('chat.importError'), 'Dismiss', { duration: 5000 });
+    }
   }
 
   protected clearChat(): void {

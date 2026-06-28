@@ -1,12 +1,19 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  viewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { Resume } from '../../../core/models/resume.model';
-import { ResumeRepository } from '../services/resume-repository.service';
 import { I18nService } from '../../../core/i18n/i18n.service';
+import { ResumeRepository } from '../services/resume-repository.service';
 import { ResumeExportService } from '../../export/services/resume-export.service';
+import { PrintService } from '../../export/services/print.service';
 import { ImportPanelComponent } from '../../import/components/import-panel.component';
 import { CvDocumentComponent } from '../../preview/components/cv-document.component';
 
@@ -26,8 +33,11 @@ import { CvDocumentComponent } from '../../preview/components/cv-document.compon
 })
 export class ResumeWorkspacePage {
   private readonly repository = inject(ResumeRepository);
-  protected readonly i18n = inject(I18nService);
   private readonly exporter = inject(ResumeExportService);
+  private readonly printer = inject(PrintService);
+  protected readonly i18n = inject(I18nService);
+
+  private readonly cvDoc = viewChild<ElementRef<HTMLElement>>('cvDoc');
 
   protected readonly resume = this.repository.resume;
   protected readonly hasResume = this.repository.hasResume;
@@ -44,7 +54,10 @@ export class ResumeWorkspacePage {
   }
 
   protected exportPdf(): void {
-    this.exporter.exportPdf();
+    const element = this.cvDoc()?.nativeElement;
+    if (element) {
+      this.printer.print(element);
+    }
   }
 
   protected clear(): void {

@@ -224,25 +224,26 @@
     --color-app-bg: #ffffff;
   }
 
+  // Hide everything, then reveal only the element marked for printing.
   body * {
     visibility: hidden;
   }
 
-  .cv-document,
-  .cv-document * {
+  .print-target,
+  .print-target * {
     visibility: visible;
   }
 
-  .cv-document {
+  .print-target {
+    position: absolute;
+    inset: 0;
+  }
+
+  .print-target .cv-document {
     width: 210mm;
     box-shadow: none;
     margin: 0;
     padding: var(--cv-page-pad);
-  }
-
-  .cv-document {
-    position: absolute;
-    inset: 0;
   }
 }
 

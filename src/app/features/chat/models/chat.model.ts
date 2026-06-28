@@ -17,3 +17,11 @@ export interface ChatMessage {
 }
 
 export type ChatTask = 'optimize' | 'match' | 'recruiter' | 'technical';
+
+export const CHAT_EXPORT_VERSION = 1;
+
+export interface ChatExport {
+  readonly version: number;
+  readonly jobDescription: string;
+  readonly messages: readonly ChatMessage[];
+}

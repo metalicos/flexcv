@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Resume } from '../../../core/models/resume.model';
+import { downloadTextFile, slugify } from '../../../core/utils/download.util';
 
-/** Serializes and downloads the resume; delegates PDF to the browser print pipeline. */
+/** Serializes and downloads the resume as JSON. */
 @Injectable({ providedIn: 'root' })
 export class ResumeExportService {
   toJsonString(resume: Resume): string {
@@ -9,32 +10,7 @@ export class ResumeExportService {
   }
 
   downloadJson(resume: Resume): void {
-    const fileName = this.fileNameFor(resume, 'json');
-    const blob = new Blob([this.toJsonString(resume)], {
-      type: 'application/json',
-    });
-    this.triggerDownload(blob, fileName);
-  }
-
-  /** Print-to-PDF using the print stylesheet (.cv-document is the only visible element). */
-  exportPdf(): void {
-    window.print();
-  }
-
-  private fileNameFor(resume: Resume, extension: string): string {
-    const slug = resume.basics.fullName
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
-    return `${slug || 'resume'}.${extension}`;
-  }
-
-  private triggerDownload(blob: Blob, fileName: string): void {
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement('a');
-    anchor.href = url;
-    anchor.download = fileName;
-    anchor.click();
-    URL.revokeObjectURL(url);
+    const fileName = `${slugify(resume.basics.fullName, 'resume')}.json`;
+    downloadTextFile(fileName, this.toJsonString(resume));
   }
 }

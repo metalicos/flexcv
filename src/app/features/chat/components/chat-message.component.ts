@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  input,
+  viewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,6 +14,7 @@ import { Resume } from '../../../core/models/resume.model';
 import { I18nService } from '../../../core/i18n/i18n.service';
 import { ResumeRepository } from '../../resume/services/resume-repository.service';
 import { ResumeExportService } from '../../export/services/resume-export.service';
+import { PrintService } from '../../export/services/print.service';
 import { CvDocumentComponent } from '../../preview/components/cv-document.component';
 import { ChatMessage } from '../models/chat.model';
 
@@ -21,10 +29,12 @@ import { ChatMessage } from '../models/chat.model';
 export class ChatMessageComponent {
   private readonly repository = inject(ResumeRepository);
   private readonly exporter = inject(ResumeExportService);
+  private readonly printer = inject(PrintService);
   private readonly snackBar = inject(MatSnackBar);
   protected readonly i18n = inject(I18nService);
 
   readonly message = input.required<ChatMessage>();
+  private readonly cvDoc = viewChild<ElementRef<HTMLElement>>('cvDoc');
 
   protected applyResume(resume: Resume): void {
     this.repository.set(resume);
@@ -33,5 +43,12 @@ export class ChatMessageComponent {
 
   protected downloadResume(resume: Resume): void {
     this.exporter.downloadJson(resume);
+  }
+
+  protected downloadPdf(): void {
+    const element = this.cvDoc()?.nativeElement;
+    if (element) {
+      this.printer.print(element);
+    }
   }
 }

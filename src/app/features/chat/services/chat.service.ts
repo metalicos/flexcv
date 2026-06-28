@@ -3,7 +3,14 @@ import { Resume } from '../../../core/models/resume.model';
 import { ResumeRepository } from '../../resume/services/resume-repository.service';
 import { ResumeAiService } from '../../ai/services/resume-ai.service';
 import { I18nService } from '../../../core/i18n/i18n.service';
-import { ChatContent, ChatMessage, ChatRole } from '../models/chat.model';
+import {
+  CHAT_EXPORT_VERSION,
+  ChatContent,
+  ChatExport,
+  ChatMessage,
+  ChatRole,
+} from '../models/chat.model';
+import { ChatImportError, validateChatExport } from '../validators/chat.validator';
 
 /**
  * Holds the AI chat conversation. State lives in a root service so it survives
@@ -67,6 +74,32 @@ export class ChatService {
 
   clear(): void {
     this.messagesSig.set([]);
+  }
+
+  exportJson(): string {
+    const data: ChatExport = {
+      version: CHAT_EXPORT_VERSION,
+      jobDescription: this.jobDescription(),
+      messages: this.messagesSig(),
+    };
+    return JSON.stringify(data, null, 2);
+  }
+
+  importJson(text: string): void {
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      throw new ChatImportError('The file is not valid JSON.');
+    }
+    const data = validateChatExport(parsed);
+    const messages = data.messages.map((message, index) => ({
+      ...message,
+      id: `m${index}`,
+    }));
+    this.nextId = messages.length;
+    this.messagesSig.set(messages);
+    this.jobDescription.set(data.jobDescription);
   }
 
   private async run(

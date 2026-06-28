@@ -68,6 +68,11 @@ export const en = {
 
   'chat.title': 'AI Chat',
   'chat.clear': 'Clear chat',
+  'chat.export': 'Export chat',
+  'chat.import': 'Import chat',
+  'chat.exported': 'Chat exported.',
+  'chat.importedOk': 'Chat imported.',
+  'chat.importError': 'Could not import chat: invalid file.',
   'chat.needResume.before': 'Import a resume first on the',
   'chat.needResume.after': 'page.',
   'chat.needKey.before': 'Add your Gemini API key in',
@@ -91,6 +96,7 @@ export const en = {
   'chatmsg.optimized.subtitle': 'Tailored to the vacancy. Save the JSON for GitHub.',
   'chatmsg.useAsCv': 'Use as my CV',
   'chatmsg.downloadJson': 'Download JSON',
+  'chatmsg.downloadPdf': 'Download PDF',
   'chatmsg.savedAsCv': 'Optimized resume saved as your current CV.',
 } as const;
 
@@ -148,6 +154,11 @@ export const uk: Record<TranslationKey, string> = {
 
   'chat.title': 'AI Чат',
   'chat.clear': 'Очистити чат',
+  'chat.export': 'Експорт чату',
+  'chat.import': 'Імпорт чату',
+  'chat.exported': 'Чат експортовано.',
+  'chat.importedOk': 'Чат імпортовано.',
+  'chat.importError': 'Не вдалося імпортувати чат: некоректний файл.',
   'chat.needResume.before': 'Спершу імпортуйте резюме на сторінці',
   'chat.needResume.after': '.',
   'chat.needKey.before': 'Додайте ключ Gemini API у',
@@ -171,6 +182,7 @@ export const uk: Record<TranslationKey, string> = {
   'chatmsg.optimized.subtitle': 'Підлаштоване під вакансію. Збережіть JSON для GitHub.',
   'chatmsg.useAsCv': 'Зробити моїм CV',
   'chatmsg.downloadJson': 'Завантажити JSON',
+  'chatmsg.downloadPdf': 'Завантажити PDF',
   'chatmsg.savedAsCv': 'Оптимізоване резюме збережено як ваше поточне CV.',
 };
 

@@ -23,7 +23,7 @@
     <app-import-panel (imported)="onImported($event)" />
   </mat-expansion-panel>
 
-  <app-cv-document [resume]="resume()!" />
+  <app-cv-document #cvDoc [resume]="resume()!" />
 } @else {
   <mat-card>
     <mat-card-header>
