@@ -58,6 +58,7 @@ export class ResumeWorkspacePage {
   protected readonly resume = this.repository.resume;
   protected readonly hasResume = this.repository.hasResume;
   protected readonly section = signal<CvSection>('editor');
+  protected readonly sharedView = signal(false);
 
   constructor() {
     this.loadSharedFromQuery();
@@ -69,10 +70,12 @@ export class ResumeWorkspacePage {
 
   protected onImported(resume: Resume): void {
     this.repository.set(resume);
+    this.sharedView.set(false);
   }
 
   protected createNew(): void {
     this.repository.set(SAMPLE_RESUME);
+    this.sharedView.set(false);
     this.section.set('editor');
   }
 
@@ -102,6 +105,7 @@ export class ResumeWorkspacePage {
     if (embedded) {
       try {
         this.repository.set(this.shareService.decodeEmbedded(embedded));
+        this.sharedView.set(true);
         this.notifyShared();
       } catch {
         this.notifyShareError();
@@ -113,6 +117,7 @@ export class ResumeWorkspacePage {
         .fromUrl(url)
         .then((resume) => {
           this.repository.set(resume);
+          this.sharedView.set(true);
           this.notifyShared();
         })
         .catch(() => this.notifyShareError());

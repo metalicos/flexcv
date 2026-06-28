@@ -40,7 +40,7 @@
           </mat-card-content>
         </mat-card>
 
-        @if (hasResume()) {
+        @if (hasResume() && !sharedView()) {
           <mat-card class="mb-6">
             <mat-card-header>
               <mat-card-title>{{ i18n.t('cv.editor.jsonTitle') }}</mat-card-title>

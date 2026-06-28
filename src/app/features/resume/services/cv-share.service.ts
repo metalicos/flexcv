@@ -7,14 +7,18 @@ export const SHARE_DATA_PARAM = 'cvData';
 export const SHARE_URL_PARAM = 'cv';
 
 /**
- * Builds and reads self-contained share links. A link embeds the whole CV JSON
- * (URL-safe base64) so it can be opened anywhere without hosting the file.
+ * Builds and reads share links. A link can either embed the whole CV JSON
+ * (URL-safe base64) or point to a publicly hosted CV JSON file.
  */
 @Injectable({ providedIn: 'root' })
 export class CvShareService {
   buildLink(resume: Resume): string {
     const encoded = base64UrlEncode(JSON.stringify(resume));
     return `${this.baseUrl()}cv?${SHARE_DATA_PARAM}=${encoded}`;
+  }
+
+  buildUrlLink(jsonUrl: string): string {
+    return `${this.baseUrl()}cv?${SHARE_URL_PARAM}=${encodeURIComponent(jsonUrl.trim())}`;
   }
 
   decodeEmbedded(encoded: string): Resume {
