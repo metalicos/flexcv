@@ -1,0 +1,52 @@
+// Settings page layout and the API-key status indicator.
+// Generic card spacing now lives in _cards.scss.
+
+.settings-page {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.settings-card-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.settings-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.settings-field-icon {
+  color: var(--color-text-muted);
+  margin-right: var(--space-2);
+}
+
+.settings-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9rem;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+}
+
+.settings-status mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.settings-status--ok {
+  background: color-mix(in srgb, var(--color-success) 12%, transparent);
+  color: var(--color-success);
+}
+
+.settings-status--warn {
+  background: color-mix(in srgb, var(--color-warning) 14%, transparent);
+  color: var(--color-warning);
+}

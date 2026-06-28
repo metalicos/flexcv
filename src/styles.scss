@@ -2,10 +2,12 @@
 @use 'styles/variables';
 @use 'styles/typography';
 @use 'styles/layout';
+@use 'styles/cards';
 @use 'styles/forms';
 @use 'styles/cv';
 @use 'styles/utilities';
 @use 'styles/chat';
+@use 'styles/settings';
 
 @tailwind base;
 @tailwind components;

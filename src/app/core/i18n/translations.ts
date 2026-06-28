@@ -38,6 +38,8 @@ export const en = {
   'settings.removeKey': 'Remove key',
   'settings.saved': 'Settings saved.',
   'settings.keyRemoved': 'API key removed.',
+  'settings.keyConfigured': 'API key configured',
+  'settings.keyMissing': 'No API key yet — AI features are disabled',
 
   'import.tab.file': 'File',
   'import.tab.url': 'From URL',
@@ -148,6 +150,8 @@ export const uk: Record<TranslationKey, string> = {
   'settings.removeKey': 'Видалити ключ',
   'settings.saved': 'Налаштування збережено.',
   'settings.keyRemoved': 'Ключ API видалено.',
+  'settings.keyConfigured': 'Ключ API налаштовано',
+  'settings.keyMissing': 'Ключа ще немає — AI-функції вимкнено',
 
   'import.tab.file': 'Файл',
   'import.tab.url': 'За URL',
