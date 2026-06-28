@@ -77,8 +77,8 @@ export class ResumeAiService {
     return this.text(buildImproveSkillsPrompt(this.serialize(resume), this.language()));
   }
 
-  review(resume: Resume, jobDescription: string): Promise<string> {
-    return this.text(buildReviewPrompt(this.serialize(resume), jobDescription, this.language()));
+  review(resume: Resume): Promise<string[]> {
+    return this.pitch(buildReviewPrompt(this.serialize(resume), this.language()));
   }
 
   chat(

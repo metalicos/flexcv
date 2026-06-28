@@ -88,7 +88,7 @@ export class ChatPage {
     { key: 'improveSummary', labelKey: 'chat.task.improveSummary', icon: 'subject', needsJd: false },
     { key: 'improveEmployment', labelKey: 'chat.task.improveEmployment', icon: 'work', needsJd: false },
     { key: 'improveSkills', labelKey: 'chat.task.improveSkills', icon: 'build', needsJd: false },
-    { key: 'review', labelKey: 'chat.task.review', icon: 'rate_review', needsJd: true },
+    { key: 'review', labelKey: 'chat.task.review', icon: 'rate_review', needsJd: false },
     { key: 'restructure', labelKey: 'chat.task.restructure', icon: 'dashboard_customize', needsJd: false },
   ];
 

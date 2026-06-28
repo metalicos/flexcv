@@ -98,9 +98,10 @@ export class ChatService {
   }
 
   runReview(): Promise<void> {
-    return this.run(this.i18n.t('chat.task.review'), async (resume, jd) => ({
-      type: 'text',
-      text: await this.ai.review(resume, jd),
+    return this.run(this.i18n.t('chat.task.review'), async (resume) => ({
+      type: 'pitch',
+      title: this.i18n.t('chat.title.review'),
+      points: await this.ai.review(resume),
     }));
   }
 

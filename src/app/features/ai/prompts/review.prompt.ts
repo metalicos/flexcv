@@ -1,21 +1,13 @@
-/** Prompt: review the CV and list weaknesses relative to the target position. */
-export function buildReviewPrompt(
-  resumeJson: string,
-  jobDescription: string,
-  language: string,
-): string {
-  return `You are a senior technical recruiter. Review the candidate's resume against the target
-position and identify its WEAK POINTS and risks: missing skills, vague achievements, gaps, weak
-wording, anything that could hurt the candidate for THIS role. Be honest and specific, and give a
-short actionable fix for each weakness.
+/** Prompt: general CV review — recommendation theses about its weak points. */
+export function buildReviewPrompt(resumeJson: string, language: string): string {
+  return `You are a senior technical recruiter and resume coach. Review the candidate's resume on
+its own merits (NOT against any specific vacancy) and produce concise recommendation theses:
+weak points, gaps, vague or unquantified achievements, weak wording, structure issues — each with a
+short, actionable recommendation on how to improve it.
 
-Reply in ${language} as plain text (a numbered list of weaknesses with fixes). No code fences.
+Return ONLY this JSON (no markdown):
+{ "points": string[] }   // 6-10 short recommendation theses written in ${language}
 
 RESUME JSON:
-${resumeJson}
-
-TARGET JOB DESCRIPTION:
-"""
-${jobDescription}
-"""`;
+${resumeJson}`;
 }
