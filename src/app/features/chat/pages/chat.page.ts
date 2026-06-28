@@ -3,17 +3,39 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SettingsService } from '../../../core/config/settings.service';
+import { I18nService } from '../../../core/i18n/i18n.service';
+import { TranslationKey } from '../../../core/i18n/translations';
+import { downloadTextFile } from '../../../core/utils/download.util';
 import { ResumeRepository } from '../../resume/services/resume-repository.service';
 import { ChatService } from '../services/chat.service';
-import { I18nService } from '../../../core/i18n/i18n.service';
-import { downloadTextFile } from '../../../core/utils/download.util';
 import { ChatMessageComponent } from '../components/chat-message.component';
+
+type ChatTaskKey =
+  | 'concise'
+  | 'recruiter'
+  | 'technical'
+  | 'questions'
+  | 'improveSummary'
+  | 'improveEmployment'
+  | 'improveSkills'
+  | 'review'
+  | 'restructure';
+
+interface ChatTaskItem {
+  readonly key: ChatTaskKey;
+  readonly labelKey: TranslationKey;
+  readonly icon: string;
+  readonly needsJd: boolean;
+}
 
 @Component({
   selector: 'app-chat-page',
@@ -24,9 +46,12 @@ import { ChatMessageComponent } from '../components/chat-message.component';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatListModule,
+    MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
     MatProgressBarModule,
+    MatTooltipModule,
     ChatMessageComponent,
   ],
   templateUrl: './chat.page.html',
@@ -36,8 +61,8 @@ export class ChatPage {
   private readonly chat = inject(ChatService);
   private readonly settings = inject(SettingsService);
   private readonly repository = inject(ResumeRepository);
-  protected readonly i18n = inject(I18nService);
   private readonly snackBar = inject(MatSnackBar);
+  protected readonly i18n = inject(I18nService);
 
   protected readonly messages = this.chat.messages;
   protected readonly busy = this.chat.busy;
@@ -48,27 +73,41 @@ export class ChatPage {
 
   protected readonly draft = signal('');
   protected readonly hasJob = computed(() => this.jobDescription().trim().length > 0);
-  protected readonly canRunTask = computed(
-    () => this.hasResume() && this.hasApiKey() && this.hasJob() && !this.busy(),
-  );
   protected readonly canChat = computed(
     () => this.hasResume() && this.hasApiKey() && !this.busy(),
   );
 
-  protected optimize(): void {
-    void this.chat.runOptimize();
+  protected readonly contextTasks: readonly ChatTaskItem[] = [
+    { key: 'concise', labelKey: 'chat.task.concise', icon: 'auto_fix_high', needsJd: true },
+    { key: 'recruiter', labelKey: 'chat.recruiter', icon: 'record_voice_over', needsJd: true },
+    { key: 'technical', labelKey: 'chat.technical', icon: 'terminal', needsJd: true },
+    { key: 'questions', labelKey: 'chat.task.questions', icon: 'quiz', needsJd: true },
+  ];
+
+  protected readonly improveTasks: readonly ChatTaskItem[] = [
+    { key: 'improveSummary', labelKey: 'chat.task.improveSummary', icon: 'subject', needsJd: false },
+    { key: 'improveEmployment', labelKey: 'chat.task.improveEmployment', icon: 'work', needsJd: false },
+    { key: 'improveSkills', labelKey: 'chat.task.improveSkills', icon: 'build', needsJd: false },
+    { key: 'review', labelKey: 'chat.task.review', icon: 'rate_review', needsJd: true },
+    { key: 'restructure', labelKey: 'chat.task.restructure', icon: 'dashboard_customize', needsJd: false },
+  ];
+
+  protected canRun(item: ChatTaskItem): boolean {
+    return this.canChat() && (!item.needsJd || this.hasJob());
   }
 
-  protected match(): void {
-    void this.chat.runMatch();
-  }
-
-  protected recruiter(): void {
-    void this.chat.runRecruiter();
-  }
-
-  protected technical(): void {
-    void this.chat.runTechnical();
+  protected runTask(key: ChatTaskKey): void {
+    switch (key) {
+      case 'concise': void this.chat.runConcise(); return;
+      case 'recruiter': void this.chat.runRecruiter(); return;
+      case 'technical': void this.chat.runTechnical(); return;
+      case 'questions': void this.chat.runQuestions(); return;
+      case 'improveSummary': void this.chat.runImproveSummary(); return;
+      case 'improveEmployment': void this.chat.runImproveEmployment(); return;
+      case 'improveSkills': void this.chat.runImproveSkills(); return;
+      case 'review': void this.chat.runReview(); return;
+      case 'restructure': void this.chat.runRestructure(); return;
+    }
   }
 
   protected send(): void {

@@ -36,7 +36,7 @@
 } @else {
   @if (!hasApiKey()) {
     <mat-card class="mb-4">
-      <mat-card-content class="flex items-center gap-3 pt-4">
+      <mat-card-content class="flex items-center gap-3">
         <mat-icon class="accent">key</mat-icon>
         <span>
           {{ i18n.t('chat.needKey.before') }}
@@ -47,75 +47,98 @@
     </mat-card>
   }
 
-  <mat-card class="mb-4">
-    <mat-card-header>
-      <mat-card-title>{{ i18n.t('chat.vacancy.title') }}</mat-card-title>
-      <mat-card-subtitle>{{ i18n.t('chat.vacancy.subtitle') }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content class="pt-4">
-      <mat-form-field class="form-field-full" appearance="outline">
-        <mat-label>{{ i18n.t('chat.jobDescription.label') }}</mat-label>
-        <textarea
-          matInput
-          rows="6"
-          [ngModel]="jobDescription()"
-          (ngModelChange)="jobDescription.set($event)"
-        ></textarea>
-      </mat-form-field>
-    </mat-card-content>
-  </mat-card>
+  <div class="cv-workspace">
+    <!-- Task sidebar -->
+    <aside class="cv-workspace-nav surface-card">
+      <mat-nav-list>
+        <h3 matSubheader>{{ i18n.t('chat.cat.context') }}</h3>
+        @for (item of contextTasks; track item.key) {
+          <a
+            mat-list-item
+            [disabled]="!canRun(item)"
+            [matTooltip]="item.needsJd && !hasJob() ? i18n.t('chat.needVacancyForTask') : ''"
+            (click)="canRun(item) && runTask(item.key)"
+          >
+            <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+            <span matListItemTitle>{{ i18n.t(item.labelKey) }}</span>
+          </a>
+        }
 
-  <div class="chat-thread">
-    @if (isEmpty()) {
-      <div class="empty-state">
-        <mat-icon>forum</mat-icon>
-        <p>{{ i18n.t('chat.empty') }}</p>
+        <mat-divider class="my-2" />
+
+        <h3 matSubheader>{{ i18n.t('chat.cat.improve') }}</h3>
+        @for (item of improveTasks; track item.key) {
+          <a
+            mat-list-item
+            [disabled]="!canRun(item)"
+            [matTooltip]="item.needsJd && !hasJob() ? i18n.t('chat.needVacancyForTask') : ''"
+            (click)="canRun(item) && runTask(item.key)"
+          >
+            <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+            <span matListItemTitle>{{ i18n.t(item.labelKey) }}</span>
+          </a>
+        }
+      </mat-nav-list>
+    </aside>
+
+    <!-- Conversation -->
+    <div class="cv-workspace-content">
+      <mat-card class="mb-4">
+        <mat-card-header>
+          <mat-card-title>{{ i18n.t('chat.vacancy.title') }}</mat-card-title>
+          <mat-card-subtitle>{{ i18n.t('chat.vacancy.subtitle') }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field class="form-field-full" appearance="outline">
+            <mat-label>{{ i18n.t('chat.jobDescription.label') }}</mat-label>
+            <textarea
+              matInput
+              rows="5"
+              [ngModel]="jobDescription()"
+              (ngModelChange)="jobDescription.set($event)"
+            ></textarea>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+
+      <div class="chat-thread">
+        @if (isEmpty()) {
+          <div class="empty-state">
+            <mat-icon>forum</mat-icon>
+            <p>{{ i18n.t('chat.empty') }}</p>
+          </div>
+        }
+        @for (message of messages(); track message.id) {
+          <app-chat-message [message]="message" />
+        }
+        @if (busy()) {
+          <mat-progress-bar mode="indeterminate" />
+        }
       </div>
-    }
-    @for (message of messages(); track message.id) {
-      <app-chat-message [message]="message" />
-    }
-    @if (busy()) {
-      <mat-progress-bar mode="indeterminate" />
-    }
-  </div>
 
-  <div class="chat-composer">
-    <div class="form-actions mb-3">
-      <button matButton="tonal" [disabled]="!canRunTask()" (click)="optimize()">
-        <mat-icon>auto_fix_high</mat-icon> {{ i18n.t('chat.optimize') }}
-      </button>
-      <button matButton="tonal" [disabled]="!canRunTask()" (click)="match()">
-        <mat-icon>compare_arrows</mat-icon> {{ i18n.t('chat.match') }}
-      </button>
-      <button matButton="tonal" [disabled]="!canRunTask()" (click)="recruiter()">
-        <mat-icon>record_voice_over</mat-icon> {{ i18n.t('chat.recruiter') }}
-      </button>
-      <button matButton="tonal" [disabled]="!canRunTask()" (click)="technical()">
-        <mat-icon>terminal</mat-icon> {{ i18n.t('chat.technical') }}
-      </button>
-    </div>
-
-    <div class="chat-input-row">
-      <mat-form-field class="form-field-full" appearance="outline" subscriptSizing="dynamic">
-        <mat-label>{{ i18n.t('chat.ask.label') }}</mat-label>
-        <textarea
-          matInput
-          rows="2"
-          [ngModel]="draft()"
-          (ngModelChange)="draft.set($event)"
-          (keydown.enter)="$event.preventDefault(); send()"
-        ></textarea>
-      </mat-form-field>
-      <button
-        matIconButton="filled"
-        class="chat-send"
-        [disabled]="!canChat() || !draft().trim()"
-        (click)="send()"
-        aria-label="Send"
-      >
-        <mat-icon>send</mat-icon>
-      </button>
+      <div class="chat-composer">
+        <div class="chat-input-row">
+          <mat-form-field class="form-field-full" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ i18n.t('chat.ask.label') }}</mat-label>
+            <textarea
+              matInput
+              rows="2"
+              [ngModel]="draft()"
+              (ngModelChange)="draft.set($event)"
+              (keydown.enter)="$event.preventDefault(); send()"
+            ></textarea>
+          </mat-form-field>
+          <button
+            matIconButton="filled"
+            class="chat-send"
+            [disabled]="!canChat() || !draft().trim()"
+            (click)="send()"
+            aria-label="Send"
+          >
+            <mat-icon>send</mat-icon>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 }

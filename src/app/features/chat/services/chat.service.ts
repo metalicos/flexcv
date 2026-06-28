@@ -61,6 +61,56 @@ export class ChatService {
     }));
   }
 
+  runConcise(): Promise<void> {
+    return this.run(this.i18n.t('chat.task.concise'), async (resume, jd) => ({
+      type: 'optimized',
+      resume: await this.ai.concise(resume, jd),
+    }));
+  }
+
+  runQuestions(): Promise<void> {
+    return this.run(this.i18n.t('chat.task.questions'), async (resume, jd) => ({
+      type: 'pitch',
+      title: this.i18n.t('chat.title.questions'),
+      points: await this.ai.interviewQuestions(resume, jd),
+    }));
+  }
+
+  runImproveSummary(): Promise<void> {
+    return this.run(this.i18n.t('chat.task.improveSummary'), async (resume) => ({
+      type: 'text',
+      text: await this.ai.improveSummary(resume),
+    }));
+  }
+
+  runImproveEmployment(): Promise<void> {
+    return this.run(this.i18n.t('chat.task.improveEmployment'), async (resume) => ({
+      type: 'text',
+      text: await this.ai.improveEmployment(resume),
+    }));
+  }
+
+  runImproveSkills(): Promise<void> {
+    return this.run(this.i18n.t('chat.task.improveSkills'), async (resume) => ({
+      type: 'text',
+      text: await this.ai.improveSkills(resume),
+    }));
+  }
+
+  runReview(): Promise<void> {
+    return this.run(this.i18n.t('chat.task.review'), async (resume, jd) => ({
+      type: 'text',
+      text: await this.ai.review(resume, jd),
+    }));
+  }
+
+  runRestructure(): Promise<void> {
+    return this.run(this.i18n.t('chat.task.restructure'), async (resume) => ({
+      type: 'optimized',
+      resume: await this.ai.restructure(resume),
+    }));
+  }
+
   ask(question: string): Promise<void> {
     const text = question.trim();
     if (!text) {
