@@ -36,6 +36,7 @@ export class CvJsonEditorComponent {
 
   readonly resume = input.required<Resume>();
   readonly applied = output<Resume>();
+  readonly deleted = output<void>();
 
   protected readonly draft = linkedSignal(() => JSON.stringify(this.resume(), null, 2));
 
@@ -55,5 +56,9 @@ export class CvJsonEditorComponent {
         error instanceof Error ? error.message : this.i18n.t('cv.editor.invalidJson');
       this.snackBar.open(message, 'Dismiss', { duration: 5000 });
     }
+  }
+
+  protected remove(): void {
+    this.deleted.emit();
   }
 }

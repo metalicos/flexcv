@@ -46,7 +46,11 @@
               <mat-card-title>{{ i18n.t('cv.editor.jsonTitle') }}</mat-card-title>
             </mat-card-header>
             <mat-card-content class="pt-4">
-              <app-cv-json-editor [resume]="resume()!" (applied)="onImported($event)" />
+              <app-cv-json-editor
+                [resume]="resume()!"
+                (applied)="onImported($event)"
+                (deleted)="clear()"
+              />
             </mat-card-content>
           </mat-card>
         }

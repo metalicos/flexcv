@@ -15,5 +15,8 @@
     <button matButton="filled" (click)="apply()">
       <mat-icon>check</mat-icon> {{ i18n.t('cv.editor.apply') }}
     </button>
+    <button matButton (click)="remove()">
+      <mat-icon>delete</mat-icon> {{ i18n.t('cv.editor.delete') }}
+    </button>
   </div>
 </div>
