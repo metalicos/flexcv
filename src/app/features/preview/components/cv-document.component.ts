@@ -4,11 +4,13 @@ import {
   computed,
   inject,
   input,
+  output,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Resume } from '../../../core/models/resume.model';
 import { SettingsService } from '../../../core/config/settings.service';
 import { Language } from '../../../core/i18n/translations';
+import { I18nService } from '../../../core/i18n/i18n.service';
 
 interface ContactRow {
   readonly icon: string;
@@ -26,7 +28,15 @@ interface CvLabels {
   readonly description: string;
 }
 
-/** Section headings and inline labels follow the configured CV language. */
+export type CvEditSection = 'basics' | 'language' | 'skill' | 'education' | 'employment';
+export type CvEditAction = 'edit' | 'add' | 'remove';
+
+export interface CvEditIntent {
+  readonly section: CvEditSection;
+  readonly action: CvEditAction;
+  readonly index?: number;
+}
+
 const CV_LABELS: Record<Language, CvLabels> = {
   en: {
     summary: 'Summary',
@@ -50,7 +60,10 @@ const CV_LABELS: Record<Language, CvLabels> = {
   },
 };
 
-/** Presentational rendering of a Resume, matching the reference CV layout. */
+/**
+ * Renders a Resume. With `editable`, it overlays hover controls and emits edit
+ * intents — all mutation happens in the parent, so the component stays presentational.
+ */
 @Component({
   selector: 'app-cv-document',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -60,11 +73,19 @@ const CV_LABELS: Record<Language, CvLabels> = {
 })
 export class CvDocumentComponent {
   private readonly settings = inject(SettingsService);
+  protected readonly i18n = inject(I18nService);
 
   readonly resume = input.required<Resume>();
+  readonly editable = input(false);
+  readonly edit = output<CvEditIntent>();
+
   protected readonly labels = computed<CvLabels>(
     () => CV_LABELS[this.settings.cvLanguage()],
   );
+
+  protected fire(section: CvEditSection, action: CvEditAction, index?: number): void {
+    this.edit.emit({ section, action, index });
+  }
 
   protected contactRows(resume: Resume): ContactRow[] {
     const c = resume.basics.contact;

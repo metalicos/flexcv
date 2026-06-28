@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+
+<mat-dialog-content class="flex flex-col gap-3 pt-2" style="min-width: 360px">
+  @for (field of data.fields; track field.key) {
+    <mat-form-field appearance="outline" class="form-field-full">
+      <mat-label>{{ field.label }}</mat-label>
+      @if (field.type === 'textarea') {
+        <textarea
+          matInput
+          rows="4"
+          [ngModel]="values()[field.key]"
+          (ngModelChange)="setValue(field.key, $event)"
+        ></textarea>
+      } @else {
+        <input
+          matInput
+          [ngModel]="values()[field.key]"
+          (ngModelChange)="setValue(field.key, $event)"
+        />
+      }
+    </mat-form-field>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button matButton mat-dialog-close>{{ i18n.t('common.cancel') }}</button>
+  <button matButton="filled" (click)="save()">{{ i18n.t('common.save') }}</button>
+</mat-dialog-actions>

@@ -269,3 +269,69 @@
   color: var(--color-text-muted);
   margin: 0;
 }
+
+// --- Inline builder controls (editable mode) ---
+.cv-editable .cv-block {
+  position: relative;
+}
+
+.cv-editable .cv-block:hover {
+  outline: 1px dashed color-mix(in srgb, var(--color-accent) 45%, transparent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.cv-block-actions {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+  z-index: 3;
+}
+
+.cv-block:hover > .cv-block-actions,
+.cv-block-actions:hover {
+  opacity: 1;
+}
+
+.cv-mini-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-accent);
+  cursor: pointer;
+}
+
+.cv-mini-btn:hover {
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+}
+
+.cv-mini-btn mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+@media print {
+  .cv-block-actions {
+    display: none !important;
+  }
+
+  .cv-editable .cv-block:hover {
+    outline: none;
+  }
+}

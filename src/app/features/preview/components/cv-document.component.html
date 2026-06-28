@@ -1,11 +1,19 @@
 @let cv = resume();
 @let lbl = labels();
+@let ed = editable();
 
-<article class="cv-document">
+<article class="cv-document" [class.cv-editable]="ed">
   <div class="cv-grid">
     <!-- Sidebar -->
     <aside class="cv-sidebar">
-      <header class="cv-head">
+      <header class="cv-head cv-block">
+        @if (ed) {
+          <span class="cv-block-actions">
+            <button type="button" class="cv-mini-btn" (click)="fire('basics', 'edit')">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </span>
+        }
         @if (cv.basics.containsImage && cv.basics.imageURL) {
           <img
             class="cv-photo"
@@ -31,96 +39,173 @@
         </ul>
       </section>
 
-      @if (cv.languages.length) {
-        <section>
-          <h2 class="cv-section-title">{{ lbl.languages }}</h2>
-          <div class="cv-kv-list">
-            @for (lang of cv.languages; track lang.name) {
-              <div class="cv-kv-row">
-                <span>{{ lang.name }}</span>
-                <span class="cv-kv-value">{{ lang.level }}</span>
-              </div>
-            }
-          </div>
-        </section>
-      }
-
-      @if (cv.skills.length) {
-        <section>
-          <h2 class="cv-section-title">{{ lbl.skills }}</h2>
-          @for (group of cv.skills; track group.category) {
-            <div class="cv-skill-group">
-              @if (group.category) {
-                <div class="cv-skill-group-name">{{ group.category }}</div>
+      <section>
+        <h2 class="cv-section-title cv-block">
+          {{ lbl.languages }}
+          @if (ed) {
+            <span class="cv-block-actions">
+              <button type="button" class="cv-mini-btn" (click)="fire('language', 'add')">
+                <mat-icon>add</mat-icon>
+              </button>
+            </span>
+          }
+        </h2>
+        <div class="cv-kv-list">
+          @for (lang of cv.languages; track $index) {
+            <div class="cv-kv-row cv-block">
+              <span>{{ lang.name }}</span>
+              <span class="cv-kv-value">{{ lang.level }}</span>
+              @if (ed) {
+                <span class="cv-block-actions">
+                  <button type="button" class="cv-mini-btn" (click)="fire('language', 'edit', $index)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button type="button" class="cv-mini-btn" (click)="fire('language', 'remove', $index)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </span>
               }
-              <div class="cv-skill-tags">
-                @for (skill of group.skills; track skill) {
-                  <span class="cv-skill-tag">{{ skill }}</span>
-                }
-              </div>
             </div>
           }
-        </section>
-      }
+        </div>
+      </section>
+
+      <section>
+        <h2 class="cv-section-title cv-block">
+          {{ lbl.skills }}
+          @if (ed) {
+            <span class="cv-block-actions">
+              <button type="button" class="cv-mini-btn" (click)="fire('skill', 'add')">
+                <mat-icon>add</mat-icon>
+              </button>
+            </span>
+          }
+        </h2>
+        @for (group of cv.skills; track $index) {
+          <div class="cv-skill-group cv-block">
+            @if (group.category) {
+              <div class="cv-skill-group-name">{{ group.category }}</div>
+            }
+            <div class="cv-skill-tags">
+              @for (skill of group.skills; track skill) {
+                <span class="cv-skill-tag">{{ skill }}</span>
+              }
+            </div>
+            @if (ed) {
+              <span class="cv-block-actions">
+                <button type="button" class="cv-mini-btn" (click)="fire('skill', 'edit', $index)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button type="button" class="cv-mini-btn" (click)="fire('skill', 'remove', $index)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </span>
+            }
+          </div>
+        }
+      </section>
     </aside>
 
     <!-- Main -->
     <main class="cv-main">
-      @if (cv.basics.summary) {
-        <section>
-          <h2 class="cv-section-title">{{ lbl.summary }}</h2>
+      <section>
+        <h2 class="cv-section-title cv-block">
+          {{ lbl.summary }}
+          @if (ed) {
+            <span class="cv-block-actions">
+              <button type="button" class="cv-mini-btn" (click)="fire('basics', 'edit')">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </span>
+          }
+        </h2>
+        @if (cv.basics.summary) {
           <p class="cv-summary">{{ cv.basics.summary }}</p>
-        </section>
-      }
+        }
+      </section>
 
-      @if (cv.education.length) {
-        <section>
-          <h2 class="cv-section-title">{{ lbl.education }}</h2>
-          @for (edu of cv.education; track $index) {
-            <div class="cv-edu-item">
-              <div class="cv-job-header">
-                <span class="cv-edu-degree">{{ edu.degree }}</span>
-                <span class="cv-job-period">{{ period(edu.startDate, edu.endDate) }}</span>
-              </div>
-              <div class="cv-edu-meta">{{ edu.institution }}</div>
-              @if (edu.specialty) {
-                <div class="cv-edu-meta">{{ lbl.specialty }}: {{ edu.specialty }}</div>
-              }
-            </div>
+      <section>
+        <h2 class="cv-section-title cv-block">
+          {{ lbl.education }}
+          @if (ed) {
+            <span class="cv-block-actions">
+              <button type="button" class="cv-mini-btn" (click)="fire('education', 'add')">
+                <mat-icon>add</mat-icon>
+              </button>
+            </span>
           }
-        </section>
-      }
+        </h2>
+        @for (edu of cv.education; track $index) {
+          <div class="cv-edu-item cv-block">
+            <div class="cv-job-header">
+              <span class="cv-edu-degree">{{ edu.degree }}</span>
+              <span class="cv-job-period">{{ period(edu.startDate, edu.endDate) }}</span>
+            </div>
+            <div class="cv-edu-meta">{{ edu.institution }}</div>
+            @if (edu.specialty) {
+              <div class="cv-edu-meta">{{ lbl.specialty }}: {{ edu.specialty }}</div>
+            }
+            @if (ed) {
+              <span class="cv-block-actions">
+                <button type="button" class="cv-mini-btn" (click)="fire('education', 'edit', $index)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button type="button" class="cv-mini-btn" (click)="fire('education', 'remove', $index)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </span>
+            }
+          </div>
+        }
+      </section>
 
-      @if (cv.employment.length) {
-        <section>
-          <h2 class="cv-section-title">{{ lbl.employment }}</h2>
-          @for (job of cv.employment; track $index) {
-            <div class="cv-job">
-              <div class="cv-job-header">
-                <span class="cv-job-title">{{ job.role }} ({{ job.company }})</span>
-                <span class="cv-job-period">{{ period(job.startDate, job.endDate) }}</span>
-              </div>
-              @if (job.project) {
-                <div class="cv-job-line">
-                  <span class="cv-job-label">{{ lbl.project }}: </span>{{ job.project }}
-                </div>
-              }
-              @if (job.description) {
-                <div class="cv-job-line">
-                  <span class="cv-job-label">{{ lbl.description }}: </span>{{ job.description }}
-                </div>
-              }
-              @if (job.responsibilities.length) {
-                <ul class="cv-resp-list">
-                  @for (item of job.responsibilities; track $index) {
-                    <li>{{ item }}</li>
-                  }
-                </ul>
-              }
-            </div>
+      <section>
+        <h2 class="cv-section-title cv-block">
+          {{ lbl.employment }}
+          @if (ed) {
+            <span class="cv-block-actions">
+              <button type="button" class="cv-mini-btn" (click)="fire('employment', 'add')">
+                <mat-icon>add</mat-icon>
+              </button>
+            </span>
           }
-        </section>
-      }
+        </h2>
+        @for (job of cv.employment; track $index) {
+          <div class="cv-job cv-block">
+            <div class="cv-job-header">
+              <span class="cv-job-title">{{ job.role }} ({{ job.company }})</span>
+              <span class="cv-job-period">{{ period(job.startDate, job.endDate) }}</span>
+            </div>
+            @if (job.project) {
+              <div class="cv-job-line">
+                <span class="cv-job-label">{{ lbl.project }}: </span>{{ job.project }}
+              </div>
+            }
+            @if (job.description) {
+              <div class="cv-job-line">
+                <span class="cv-job-label">{{ lbl.description }}: </span>{{ job.description }}
+              </div>
+            }
+            @if (job.responsibilities.length) {
+              <ul class="cv-resp-list">
+                @for (item of job.responsibilities; track $index) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            }
+            @if (ed) {
+              <span class="cv-block-actions">
+                <button type="button" class="cv-mini-btn" (click)="fire('employment', 'edit', $index)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button type="button" class="cv-mini-btn" (click)="fire('employment', 'remove', $index)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </span>
+            }
+          </div>
+        }
+      </section>
     </main>
   </div>
 </article>

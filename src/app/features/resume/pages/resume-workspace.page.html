@@ -53,6 +53,14 @@
           </mat-card>
 
           @if (hasResume()) {
+            <p class="field-hint mb-3">{{ i18n.t('builder.hint') }}</p>
+            <app-cv-document
+              class="block mb-6"
+              [resume]="resume()!"
+              [editable]="true"
+              (edit)="onEdit($event)"
+            />
+
             <mat-card class="mb-6">
               <mat-card-header>
                 <mat-card-title>{{ i18n.t('cv.editor.jsonTitle') }}</mat-card-title>
@@ -109,7 +117,7 @@
         }
       }
 
-      @if (hasResume()) {
+      @if (hasResume() && section() !== 'editor') {
         <app-cv-document #cvDoc [resume]="resume()!" />
       }
     </div>

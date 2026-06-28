@@ -7,6 +7,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,6 +25,9 @@ import { ImportPanelComponent } from '../../import/components/import-panel.compo
 import { CvDocumentComponent } from '../../preview/components/cv-document.component';
 import { CvJsonEditorComponent } from '../components/cv-json-editor.component';
 import { CvSharePanelComponent } from '../components/cv-share-panel.component';
+import { EditDialogComponent } from '../components/edit-dialog/edit-dialog.component';
+import { CvBlockEditService } from '../services/cv-block-edit.service';
+import { CvEditIntent } from '../../preview/components/cv-document.component';
 
 type CvSection = 'editor' | 'export' | 'share';
 
@@ -50,6 +54,8 @@ export class ResumeWorkspacePage {
   private readonly shareService = inject(CvShareService);
   private readonly importService = inject(ResumeImportService);
   private readonly route = inject(ActivatedRoute);
+  private readonly dialog = inject(MatDialog);
+  private readonly blockEdit = inject(CvBlockEditService);
   private readonly snackBar = inject(MatSnackBar);
   protected readonly i18n = inject(I18nService);
 
@@ -75,6 +81,26 @@ export class ResumeWorkspacePage {
   protected onImported(resume: Resume): void {
     this.repository.set(resume);
     this.sharedView.set(false);
+  }
+
+  protected onEdit(intent: CvEditIntent): void {
+    const current = this.resume();
+    if (!current) {
+      return;
+    }
+    if (intent.action === 'remove') {
+      this.repository.set(this.blockEdit.applyRemove(current, intent));
+      return;
+    }
+    const data = this.blockEdit.buildDialog(current, intent);
+    this.dialog
+      .open(EditDialogComponent, { data, autoFocus: false })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.repository.set(this.blockEdit.applyResult(current, intent, result));
+        }
+      });
   }
 
   protected createNew(): void {
