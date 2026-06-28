@@ -52,8 +52,9 @@ https://aistudio.google.com/api-keys), load your CV on **My CV**, then go to
 A GitHub Actions workflow (`.github/workflows/deploy.yml`) builds the app and
 publishes it to GitHub Pages on every push to `master` (and on manual dispatch).
 
-One-time setup: in the repository, go to **Settings → Pages → Build and deployment**
-and set **Source** to **GitHub Actions**.
+The workflow enables Pages automatically (`configure-pages` with `enablement: true`),
+so no manual setup is required. If your organization restricts that, enable it once
+under **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
 The workflow:
 - installs dependencies with `npm ci` and builds with the production configuration;

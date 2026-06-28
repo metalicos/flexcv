@@ -45,7 +45,10 @@ jobs:
           touch "$out/.nojekyll"
 
       - name: Configure Pages
+        # enablement: true turns Pages on via the API, so no manual repo setup is needed.
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
