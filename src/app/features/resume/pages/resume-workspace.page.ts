@@ -68,6 +68,10 @@ export class ResumeWorkspacePage {
     this.section.set(section);
   }
 
+  protected closeSharedView(): void {
+    this.sharedView.set(false);
+  }
+
   protected onImported(resume: Resume): void {
     this.repository.set(resume);
     this.sharedView.set(false);
