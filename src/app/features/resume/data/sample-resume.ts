@@ -1,9 +1,9 @@
 import { Resume } from '../../../core/models/resume.model';
 
-/** Reference resume used as a first-run demo and as the canonical JSON example. */
+/** Anonymized template resume used for "Load sample" and "Create new CV". */
 export const SAMPLE_RESUME: Resume = {
   basics: {
-    fullName: 'Ostap Komplikevych',
+    fullName: 'Alex Carter',
     title: 'Senior Java Backend Engineer',
     summary:
       'Senior Java Backend Engineer with 5+ years of experience in building and ' +
@@ -15,13 +15,12 @@ export const SAMPLE_RESUME: Resume = {
       'and IoT domains.',
     containsImage: true,
     imageURL:
-      'https://ui-avatars.com/api/?name=Ostap+Komplikevych&size=256&background=00366d&color=ffffff',
+      'https://ui-avatars.com/api/?name=Alex+Carter&size=256&background=00366d&color=ffffff',
     contact: {
       location: 'Ukraine, Lviv',
-      github: '@komplikevych',
-      email: 'ostap.ja@gmail.com',
-      linkedin: 'ostap-komplikevych',
-      birthDate: 'September 3, 1999',
+      github: '@alexcarter',
+      email: 'alex.carter@example.com',
+      linkedin: 'alex-carter',
     },
   },
   languages: [

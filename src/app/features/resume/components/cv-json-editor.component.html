@@ -1,0 +1,19 @@
+<div class="flex flex-col gap-3">
+  <p class="field-hint">{{ i18n.t('cv.editor.jsonHint') }}</p>
+  <mat-form-field class="form-field-full" appearance="outline">
+    <mat-label>{{ i18n.t('cv.editor.jsonTitle') }}</mat-label>
+    <textarea
+      matInput
+      class="cv-json-area"
+      rows="18"
+      [ngModel]="draft()"
+      (ngModelChange)="draft.set($event)"
+      spellcheck="false"
+    ></textarea>
+  </mat-form-field>
+  <div class="form-actions">
+    <button matButton="filled" (click)="apply()">
+      <mat-icon>check</mat-icon> {{ i18n.t('cv.editor.apply') }}
+    </button>
+  </div>
+</div>

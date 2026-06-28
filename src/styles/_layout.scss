@@ -68,3 +68,44 @@
     max-width: none;
   }
 }
+
+// --- CV workspace: sidebar + content ---
+.cv-workspace {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.cv-workspace-nav {
+  position: sticky;
+  top: 88px;
+  padding: var(--space-2);
+}
+
+.cv-workspace-content {
+  min-width: 0;
+}
+
+.cv-nav-active {
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  border-radius: var(--radius-md);
+  color: var(--color-accent);
+}
+
+.cv-json-area {
+  font-family: ui-monospace, 'Cascadia Code', 'Courier New', monospace;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  white-space: pre;
+}
+
+@media (max-width: 880px) {
+  .cv-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .cv-workspace-nav {
+    position: static;
+  }
+}

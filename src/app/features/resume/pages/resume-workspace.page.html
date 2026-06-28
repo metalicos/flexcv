@@ -1,37 +1,100 @@
 <div class="page-header">
   <h1 class="page-title">{{ i18n.t('cv.title') }}</h1>
-  @if (hasResume()) {
-    <div class="form-actions">
-      <button matButton="filled" (click)="exportPdf()">
-        <mat-icon>picture_as_pdf</mat-icon> {{ i18n.t('cv.exportPdf') }}
-      </button>
-      <button matButton (click)="exportJson()">
-        <mat-icon>data_object</mat-icon> {{ i18n.t('cv.exportJson') }}
-      </button>
-      <button matButton (click)="clear()">
-        <mat-icon>delete_outline</mat-icon> {{ i18n.t('cv.clear') }}
-      </button>
-    </div>
-  }
 </div>
 
-@if (hasResume()) {
-  <mat-expansion-panel class="mb-6">
-    <mat-expansion-panel-header>
-      <mat-panel-title>{{ i18n.t('cv.importReplace') }}</mat-panel-title>
-    </mat-expansion-panel-header>
-    <app-import-panel (imported)="onImported($event)" />
-  </mat-expansion-panel>
+<div class="cv-workspace">
+  <!-- Sidebar -->
+  <aside class="cv-workspace-nav surface-card">
+    <mat-nav-list>
+      <a mat-list-item [class.cv-nav-active]="section() === 'editor'" (click)="select('editor')">
+        <mat-icon matListItemIcon>edit_document</mat-icon>
+        <span matListItemTitle>{{ i18n.t('cv.nav.editor') }}</span>
+      </a>
+      <a mat-list-item [class.cv-nav-active]="section() === 'export'" (click)="select('export')">
+        <mat-icon matListItemIcon>download</mat-icon>
+        <span matListItemTitle>{{ i18n.t('cv.nav.export') }}</span>
+      </a>
+      <a mat-list-item [class.cv-nav-active]="section() === 'share'" (click)="select('share')">
+        <mat-icon matListItemIcon>share</mat-icon>
+        <span matListItemTitle>{{ i18n.t('cv.nav.share') }}</span>
+      </a>
+    </mat-nav-list>
+  </aside>
 
-  <app-cv-document #cvDoc [resume]="resume()!" />
-} @else {
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{ i18n.t('cv.getStarted.title') }}</mat-card-title>
-      <mat-card-subtitle>{{ i18n.t('cv.getStarted.subtitle') }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content class="pt-4">
-      <app-import-panel (imported)="onImported($event)" />
-    </mat-card-content>
-  </mat-card>
-}
+  <!-- Content -->
+  <div class="cv-workspace-content">
+    @switch (section()) {
+      @case ('editor') {
+        <mat-card class="mb-6">
+          <mat-card-header>
+            <mat-card-title>{{ i18n.t('cv.nav.editor') }}</mat-card-title>
+            <mat-card-subtitle>{{ i18n.t('cv.getStarted.subtitle') }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="pt-4">
+            <div class="form-actions mb-4">
+              <button matButton="tonal" (click)="createNew()">
+                <mat-icon>note_add</mat-icon> {{ i18n.t('cv.createNew') }}
+              </button>
+            </div>
+            <app-import-panel (imported)="onImported($event)" />
+          </mat-card-content>
+        </mat-card>
+
+        @if (hasResume()) {
+          <mat-card class="mb-6">
+            <mat-card-header>
+              <mat-card-title>{{ i18n.t('cv.editor.jsonTitle') }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="pt-4">
+              <app-cv-json-editor [resume]="resume()!" (applied)="onImported($event)" />
+            </mat-card-content>
+          </mat-card>
+        }
+      }
+
+      @case ('export') {
+        <mat-card class="mb-6">
+          <mat-card-header>
+            <mat-card-title>{{ i18n.t('cv.export.title') }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="pt-4">
+            @if (hasResume()) {
+              <div class="form-actions">
+                <button matButton="filled" (click)="exportPdf()">
+                  <mat-icon>picture_as_pdf</mat-icon> {{ i18n.t('cv.exportPdf') }}
+                </button>
+                <button matButton (click)="exportJson()">
+                  <mat-icon>data_object</mat-icon> {{ i18n.t('cv.exportJson') }}
+                </button>
+                <button matButton (click)="clear()">
+                  <mat-icon>delete_outline</mat-icon> {{ i18n.t('cv.clear') }}
+                </button>
+              </div>
+            } @else {
+              <p class="muted">{{ i18n.t('cv.getStarted.title') }}</p>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+
+      @case ('share') {
+        <mat-card class="mb-6">
+          <mat-card-header>
+            <mat-card-title>{{ i18n.t('cv.share.title') }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="pt-4">
+            @if (hasResume()) {
+              <app-cv-share-panel [resume]="resume()!" />
+            } @else {
+              <p class="muted">{{ i18n.t('cv.getStarted.title') }}</p>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+    }
+
+    @if (hasResume()) {
+      <app-cv-document #cvDoc [resume]="resume()!" />
+    }
+  </div>
+</div>

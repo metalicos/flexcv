@@ -34,7 +34,7 @@ export class ChatMessageComponent {
   protected readonly i18n = inject(I18nService);
 
   readonly message = input.required<ChatMessage>();
-  private readonly cvDoc = viewChild<ElementRef<HTMLElement>>('cvDoc');
+  private readonly cvDoc = viewChild('cvDoc', { read: ElementRef });
 
   protected applyResume(resume: Resume): void {
     this.repository.set(resume);

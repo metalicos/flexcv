@@ -1,0 +1,20 @@
+<div class="flex flex-col gap-4">
+  <p class="muted">{{ i18n.t('cv.share.desc') }}</p>
+  <div class="form-actions">
+    <button matButton="filled" (click)="generate()">
+      <mat-icon>link</mat-icon> {{ i18n.t('cv.share.generate') }}
+    </button>
+  </div>
+
+  @if (link()) {
+    <mat-form-field class="form-field-full" appearance="outline">
+      <mat-label>{{ i18n.t('cv.share.title') }}</mat-label>
+      <input matInput [value]="link()" readonly />
+      <button matIconButton matSuffix (click)="copy()" [attr.aria-label]="i18n.t('cv.share.copy')">
+        <mat-icon>content_copy</mat-icon>
+      </button>
+    </mat-form-field>
+  }
+
+  <p class="field-hint">{{ i18n.t('cv.share.urlHint') }}</p>
+</div>
